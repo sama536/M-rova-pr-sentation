@@ -140,11 +140,15 @@
       return;
     }
     prepDraw($(".hero__star-line"));
+    prepDraw($(".hero__mono-line"));
+    gsap.set(".hero__mono-fill", { opacity: 0 });
     heroTitleSplit = SplitText.create(".hero__title", { type: "lines", linesClass: "sl" });
     maskLines(heroTitleSplit);
     tl.to(".hero__star-line", { strokeDashoffset: 0, duration: 2.6, ease: "merova" }, at)
       .from(heroLetters, { y: 120, duration: 1.4, stagger: 0.08, ease: "expo.out" }, "<0.1")
-      .from(".hero__visual", { y: "45vh", rotate: -10, scale: 0.72, duration: 1.9, ease: "expo.out" }, "<0.15")
+      .from(".hero__visual", { y: "30vh", rotate: -45, scale: 0.6, duration: 1.9, ease: "expo.out" }, "<0.15")
+      .to(".hero__mono-line", { strokeDashoffset: 0, duration: 1.6, ease: "merova" }, "<")
+      .to(".hero__mono-fill", { opacity: 1, duration: 0.9, ease: "power2.out" }, "<1.1")
       .from(heroTitleSplit.lines, { yPercent: 110, stagger: 0.1, duration: 1.2 }, "<0.4")
       .from([".hero__copy .eyebrow", ".hero__sub", ".hero__corner span", ".hero__scroll"], { y: 24, autoAlpha: 0, stagger: 0.06, duration: 1 }, "<0.1")
       .from(".nav", { yPercent: -100, autoAlpha: 0, duration: 1 }, "<")
@@ -162,7 +166,7 @@
       .to(heroLetters, { x: (i) => (i - 2.5) * 70, ease: "none" }, 0)
       .to("[data-hero-word]", { yPercent: 40, ease: "none" }, 0)
       .to(".hero__star", { rotate: 45, scale: 1.25, ease: "none" }, 0)
-      .to(product, { yPercent: -14, rotation: 8, scale: 1.1, ease: "none" }, 0)
+      .to(product, { yPercent: -10, rotation: 90, scale: 0.8, ease: "none" }, 0)
       .to([".hero__copy", ".hero__corner"], { y: -80, autoAlpha: 0, ease: "none" }, 0);
     // suit légèrement la souris
     const art = product.firstElementChild;
@@ -171,7 +175,7 @@
       const rx = gsap.quickTo(art, "rotationX", { duration: 1.2, ease: "power3.out" });
       const ry = gsap.quickTo(art, "rotationY", { duration: 1.2, ease: "power3.out" });
       window.addEventListener("pointermove", (e) => {
-        ry((e.clientX / innerWidth - 0.5) * 22);
+        ry((e.clientX / innerWidth - 0.5) * 36);
         rx((e.clientY / innerHeight - 0.5) * -14);
       });
     }
@@ -226,9 +230,6 @@
     });
     // le monogramme en filigrane tourne pendant tout le pin
     gsap.to(".watermark--moments", { rotate: 180, ease: "none", scrollTrigger: { trigger: momentsSec, start: "top top", end: () => "+=" + innerHeight * (n - 0.2), scrub: 1 } });
-    // petit mouvement continu sur les mini-produits
-    gsap.to(".mini--tee", { y: -12, rotate: -5, duration: 2.4, yoyo: true, repeat: -1, ease: "sine.inOut" });
-    gsap.to(".mini--cap", { y: 10, rotate: 9, duration: 2.8, yoyo: true, repeat: -1, ease: "sine.inOut" });
   }
 
   /* =========================================================

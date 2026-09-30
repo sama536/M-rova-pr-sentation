@@ -1,7 +1,7 @@
 // Construit index.html : UN seul fichier autonome (polices, librairies, images incluses)
 // pour pouvoir présenter sans connexion internet.
 //   npm install && npm run build
-import { readFileSync, writeFileSync, existsSync } from "node:fs";
+import { readFileSync, writeFileSync } from "node:fs";
 import { extname } from "node:path";
 
 const read = (p) => readFileSync(new URL(p, import.meta.url));
@@ -41,13 +41,6 @@ let html = text("./src/index.html");
 // toutes les images locales (src="assets/...") sont intégrées dans le fichier
 html = html.replace(/src="(assets\/[^"]+)"/g, (_, p) => `src="${dataUri("./" + p)}"`);
 
-// photo optionnelle de la casquette à la place de l'illustration
-const findAsset = (name) => [".png", ".webp", ".jpg", ".jpeg"].map((e) => `./assets/${name}${e}`).find((p) => existsSync(new URL(p, import.meta.url)));
-const cap = findAsset("casquette");
-html = html.replace(/<!--VISUAL:([\w-]+)-->([\s\S]*?)<!--\/VISUAL-->/g, (_, key, svg) =>
-  cap ? `<img src="${dataUri(cap)}" alt="Casquette Mérova">` : svg.trim()
-);
-
 html = html
   .replace("/*INLINE:fonts*/", () => fontCss)
   .replace("/*INLINE:styles.css*/", () => text("./src/styles.css"))
@@ -56,4 +49,4 @@ html = html
 
 writeFileSync(new URL("./index.html", import.meta.url), html);
 const kb = (Buffer.byteLength(html) / 1024).toFixed(0);
-console.log(`index.html généré (${kb} Ko) — casquette : ${cap ? "photo" : "illustration"}`);
+console.log(`index.html généré (${kb} Ko)`);

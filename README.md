@@ -39,12 +39,10 @@ Plan de communication → En pratique → FAQ (accordéon) → Merci et footer.
 - **Logo :** le vrai monogramme Mérova, vectorisé depuis le fichier fourni (étoile + mot
   « MÉROVA » découpé lettre par lettre). Il se dessine dans le loader, en fond du hero et dans la
   section Mission, et sert de filigrane dans plusieurs sections.
-- **Polo :** `assets/polo.webp`, la photo fournie détourée (fond transparent). Pour la changer,
-  remplacer ce fichier puis reconstruire.
-- **Casquette :** illustration SVG. Pour mettre une vraie photo, déposer `assets/casquette.png`
-  (ou `.jpg`, `.webp`), idéalement détourée, puis reconstruire.
+- **Produits :** pas de photo ni d'illustration ; le monogramme occupe le centre du hero et la
+  section Produit met en avant les prix (25€ le t-shirt, 10€ la casquette).
 
-Toutes les images sont intégrées dans `index.html`, qui reste un fichier unique.
+Tout est intégré dans `index.html`, qui reste un fichier unique.
 
 ## Modifier le site
 
