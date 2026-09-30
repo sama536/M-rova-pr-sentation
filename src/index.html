@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mérova — Streetwear solidaire</title>
+<meta name="description" content="Mérova, marque de t-shirts et casquettes solidaire créée par Sam Aboulkheir, Corentin Guillard et Lucas Fournier — chef d'œuvre Bac Pro MCV. Chaque vente finance Le Petit Monde.">
+<meta name="theme-color" content="#191917">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%23191917'/%3E%3Cpath fill='%23EEEEEE' d='M50 6C52.2 33 56 40.5 86 45 56 49.5 52.6 57 50 94 47.4 57 43.2 49.5 18 45 43.2 40.5 47.8 33 50 6Z'/%3E%3C/svg%3E">
+<style>/*INLINE:fonts*/</style>
+<style>/*INLINE:styles.css*/</style>
+</head>
+<body class="is-loading">
+
+<!-- Symbole du monogramme, réutilisé partout -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="star" viewBox="0 0 100 100">
+      <path d="M50 6C52.2 33 56 40.5 86 45 56 49.5 52.6 57 50 94 47.4 57 43.2 49.5 18 45 43.2 40.5 47.8 33 50 6Z"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ============ LOADER ============ -->
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader__center">
+    <svg class="loader__star" viewBox="0 0 100 100">
+      <path class="loader__star-stroke" d="M50 6C52.2 33 56 40.5 86 45 56 49.5 52.6 57 50 94 47.4 57 43.2 49.5 18 45 43.2 40.5 47.8 33 50 6Z"/>
+      <path class="loader__star-fill" d="M50 6C52.2 33 56 40.5 86 45 56 49.5 52.6 57 50 94 47.4 57 43.2 49.5 18 45 43.2 40.5 47.8 33 50 6Z"/>
+    </svg>
+    <div class="loader__word"><span>M</span><span>É</span><span>R</span><span>O</span><span>V</span><span>A</span></div>
+  </div>
+  <div class="loader__meta">
+    <span>Chef d'œuvre — Bac Pro MCV</span>
+    <span>Streetwear solidaire</span>
+  </div>
+  <div class="loader__count"><span class="loader__num" id="loaderNum">0</span><span class="loader__pct">%</span></div>
+  <div class="loader__bar"><i id="loaderBar"></i></div>
+</div>
+
+<!-- ============ NAV ============ -->
+<header class="nav" id="nav">
+  <a href="#hero" class="nav__logo" data-goto="hero" aria-label="Mérova — retour au début">
+    <!--LOGO-->
+    <svg class="logo-star" viewBox="0 0 100 100" aria-hidden="true"><use href="#star"/></svg>
+    <span class="logo-word">MÉROVA</span>
+    <!--/LOGO-->
+  </a>
+  <div class="nav__mid">Chef d'œuvre Bac Pro MCV · 2026 → 2027</div>
+  <button class="nav__menu" id="menuBtn" aria-expanded="false" aria-controls="menu">
+    <span class="nav__menu-label">Sommaire</span>
+    <span class="nav__burger"><i></i><i></i></span>
+  </button>
+</header>
+
+<nav class="menu" id="menu" aria-hidden="true">
+  <div class="menu__bg"></div>
+  <ol class="menu__list" id="menuList"></ol>
+  <div class="menu__foot">
+    <span>← → ou Espace : naviguer</span><span>F : plein écran</span><span>Échap : fermer</span>
+  </div>
+</nav>
+
+<!-- ============ HUD présentation ============ -->
+<div class="hud" id="hud" aria-live="polite">
+  <div class="hud__progress"><i id="hudBar"></i></div>
+  <div class="hud__label"><span id="hudIdx">01</span><span class="hud__sep">/</span><span id="hudTotal">15</span><span class="hud__name" id="hudName">Mérova</span></div>
+  <div class="hud__keys"><kbd>←</kbd><kbd>→</kbd><kbd>F</kbd></div>
+</div>
+
+<div class="grain" aria-hidden="true"></div>
+
+<main id="main">
+
+<!-- ============ 01 HERO ============ -->
+<section class="hero" id="hero" data-slide="Mérova" data-bg="#EEEEEE" data-fg="#191917">
+  <div class="hero__bigword" aria-hidden="true"><span data-hero-word>MÉROVA</span></div>
+  <div class="hero__visual">
+    <div class="hero__halo"></div>
+    <div class="hero__product" id="heroProduct">
+      <!--VISUAL:tshirt-->
+      <svg class="tee" viewBox="0 0 400 420" role="img" aria-label="T-shirt Mérova noir">
+        <defs>
+          <linearGradient id="teeG" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#2b2b28"/><stop offset=".55" stop-color="#191917"/><stop offset="1" stop-color="#0d0d0c"/>
+          </linearGradient>
+          <linearGradient id="teeSheen" x1="0" x2="1">
+            <stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".07"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <path fill="url(#teeG)" d="M132 28c18 20 118 20 136 0l84 34 44 90-64 28-12-28v250c-60 12-180 12-240 0V152l-12 28-64-28 44-90z"/>
+        <path fill="url(#teeSheen)" d="M132 28c18 20 118 20 136 0l84 34 44 90-64 28-12-28v250c-60 12-180 12-240 0V152l-12 28-64-28 44-90z"/>
+        <path fill="none" stroke="#000" stroke-opacity=".45" stroke-width="7" d="M140 31c22 34 98 34 120 0"/>
+        <path fill="none" stroke="#fff" stroke-opacity=".08" stroke-width="2" d="M82 152l-12 28M318 152l12 28M112 70c-8 30-18 58-30 82M288 70c8 30 18 58 30 82"/>
+        <path fill="none" stroke="#000" stroke-opacity=".35" stroke-width="2" d="M130 300c20 14 40 18 60 16M240 360c20-6 40-6 60 4"/>
+        <use href="#star" x="186" y="122" width="28" height="28" fill="#EEEEEE"/>
+        <text x="200" y="170" text-anchor="middle" fill="#EEEEEE" font-family="Cormorant Garamond, serif" font-size="11" letter-spacing="5">MÉROVA</text>
+      </svg>
+      <!--/VISUAL-->
+    </div>
+  </div>
+  <div class="hero__copy">
+    <p class="eyebrow">Streetwear solidaire · Lancement octobre 2026</p>
+    <h1 class="hero__title" data-split>Du streetwear<br>qui sert à quelque chose.</h1>
+    <p class="hero__sub">Des t-shirts et des casquettes créés par trois lycéens. Chaque vente finance l'association <strong>Le Petit Monde</strong>.</p>
+  </div>
+  <div class="hero__corner">
+    <span>Sam Aboulkheir</span><span>Corentin Guillard</span><span>Lucas Fournier</span>
+  </div>
+  <div class="hero__scroll"><span>Scroll</span><i></i></div>
+</section>
+
+<!-- ============ 02 MOMENTS (pinned, façon "parfums") ============ -->
+<section class="moments" id="moments" data-slide="Le projet en 5 temps" data-steps="5" data-bg="#191917" data-fg="#EEEEEE">
+  <div class="moments__pin">
+    <svg class="watermark watermark--moments" viewBox="0 0 100 100" aria-hidden="true"><use href="#star"/></svg>
+    <ol class="moments__list" id="momentsList">
+      <li class="is-active"><span class="num">01</span><span class="txt">Équipe</span></li>
+      <li><span class="num">02</span><span class="txt">Produit</span></li>
+      <li><span class="num">03</span><span class="txt">Mission</span></li>
+      <li><span class="num">04</span><span class="txt">Objectifs</span></li>
+      <li><span class="num">05</span><span class="txt">Planning</span></li>
+    </ol>
+
+    <div class="moments__stage">
+      <div class="moment" data-bg="#191917" data-fg="#EEEEEE">
+        <div class="moment__visual moment__visual--team">
+          <span>S</span><span>C</span><span>L</span>
+        </div>
+      </div>
+      <div class="moment" data-bg="#C9B99F" data-fg="#191917">
+        <div class="moment__visual moment__visual--products">
+          <div class="mini mini--tee"><!--VISUAL:tshirt-mini--><svg viewBox="0 0 400 420" aria-hidden="true"><path fill="#EEEEEE" d="M132 28c18 20 118 20 136 0l84 34 44 90-64 28-12-28v250c-60 12-180 12-240 0V152l-12 28-64-28 44-90z"/><path fill="none" stroke="#191917" stroke-opacity=".25" stroke-width="7" d="M140 31c22 34 98 34 120 0"/><use href="#star" x="186" y="122" width="28" height="28" fill="#191917"/></svg><!--/VISUAL--></div>
+          <div class="mini mini--cap"><!--VISUAL:casquette-->
+            <svg class="cap" viewBox="0 0 440 300" role="img" aria-label="Casquette Mérova">
+              <defs>
+                <linearGradient id="capG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2d2d2a"/><stop offset="1" stop-color="#121211"/></linearGradient>
+              </defs>
+              <path fill="url(#capG)" d="M70 196C66 110 132 52 214 50c86-2 150 58 150 146z"/>
+              <path fill="none" stroke="#fff" stroke-opacity=".12" stroke-width="2" d="M214 50c-30 40-40 90-38 146M214 50c40 36 62 90 66 146"/>
+              <circle cx="214" cy="52" r="8" fill="#2d2d2a" stroke="#000" stroke-opacity=".4"/>
+              <path fill="#0f0f0e" d="M70 190h294v12H70z"/>
+              <path fill="#191917" d="M300 188c50 2 96 10 122 22 14 7 16 16 6 20-10 4-30 3-50-1-34-7-74-12-112-14z"/>
+              <path fill="none" stroke="#fff" stroke-opacity=".12" stroke-width="2" d="M306 196c44 3 84 10 110 22"/>
+              <use href="#star" x="222" y="104" width="44" height="44" fill="#EEEEEE"/>
+            </svg>
+          <!--/VISUAL--></div>
+        </div>
+      </div>
+      <div class="moment" data-bg="#B5452B" data-fg="#F4EDE4">
+        <div class="moment__visual moment__visual--mission">
+          <svg viewBox="0 0 100 100" aria-hidden="true"><use href="#star"/></svg>
+        </div>
+      </div>
+      <div class="moment" data-bg="#2F3B2E" data-fg="#EEEEEE">
+        <div class="moment__visual moment__visual--goal"><span>1 025€</span></div>
+      </div>
+      <div class="moment" data-bg="#EEEEEE" data-fg="#191917">
+        <div class="moment__visual moment__visual--plan"><span>OCT.</span><span>2026</span></div>
+      </div>
+    </div>
+
+    <div class="moments__text">
+      <div class="mtext"><p class="eyebrow">01 — Équipe</p><h3>Trois lycéens, une marque.</h3><p>Sam, Corentin et Lucas, co-fondateurs. Élèves en Bac Pro Management Commercial, on monte Mérova de A à Z.</p></div>
+      <div class="mtext"><p class="eyebrow">02 — Produit</p><h3>Un t-shirt. Une casquette.</h3><p>Une gamme courte, pensée streetwear : le t-shirt à 25€, la casquette à 10€.</p></div>
+      <div class="mtext"><p class="eyebrow">03 — Mission</p><h3>Chaque vente finance Le Petit Monde.</h3><p>Les bénéfices sont calculés et remis à l'association. C'est ça qui donne du sens au projet.</p></div>
+      <div class="mtext"><p class="eyebrow">04 — Objectifs</p><h3>50 articles. 1 025€.</h3><p>15 casquettes et 35 t-shirts. Des chiffres précis, qu'on pourra mesurer.</p></div>
+      <div class="mtext"><p class="eyebrow">05 — Planning</p><h3>Lancement début octobre 2026.</h3><p>Un projet mené de juin 2026 à février 2027, avec un rétro-planning jour par jour.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 03 ÉQUIPE ============ -->
+<section class="section team" id="equipe" data-slide="L'équipe" data-bg="#EEEEEE" data-fg="#191917">
+  <div class="section__head">
+    <p class="eyebrow">01 — L'équipe</p>
+    <h2 class="h2" data-split>Trois co-fondateurs.<br>Zéro agence.</h2>
+  </div>
+  <div class="team__grid">
+    <article class="person" data-reveal>
+      <div class="person__mono"><span>SA</span><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#star"/></svg></div>
+      <h3>Sam<br>Aboulkheir</h3><p>Co-fondateur</p>
+    </article>
+    <article class="person" data-reveal>
+      <div class="person__mono"><span>CG</span><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#star"/></svg></div>
+      <h3>Corentin<br>Guillard</h3><p>Co-fondateur</p>
+    </article>
+    <article class="person" data-reveal>
+      <div class="person__mono"><span>LF</span><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#star"/></svg></div>
+      <h3>Lucas<br>Fournier</h3><p>Co-fondateur</p>
+    </article>
+  </div>
+</section>
+
+<!-- ============ MARQUEE ============ -->
+<div class="marquee" data-bg-keep aria-hidden="true">
+  <div class="marquee__track">
+    <span>MÉROVA</span><svg viewBox="0 0 100 100"><use href="#star"/></svg><span>STREETWEAR SOLIDAIRE</span><svg viewBox="0 0 100 100"><use href="#star"/></svg><span>LE PETIT MONDE</span><svg viewBox="0 0 100 100"><use href="#star"/></svg><span>OCTOBRE 2026</span><svg viewBox="0 0 100 100"><use href="#star"/></svg>
+  </div>
+</div>
+
+<!-- ============ 04 QQOQCP (horizontal) ============ -->
+<section class="qq" id="qqoqcp" data-slide="QQOQCP" data-steps="6" data-bg="#191917" data-fg="#EEEEEE">
+  <div class="qq__pin">
+    <div class="qq__head">
+      <p class="eyebrow">02 — QQOQCP</p>
+      <h2 class="h2">Le projet,<br>en six questions.</h2>
+      <div class="qq__dots" id="qqDots"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    </div>
+    <div class="qq__track" id="qqTrack">
+      <article class="qcard"><span class="qcard__q">Quoi ?</span><p>Une marque de tee-shirts et de casquettes.</p><span class="qcard__n">01</span></article>
+      <article class="qcard"><span class="qcard__q">Quand ?</span><p>Lancement de la vente vers octobre 2026.</p><span class="qcard__n">02</span></article>
+      <article class="qcard"><span class="qcard__q">Où ?</span><p>Sur Vinted et via un site internet.</p><span class="qcard__n">03</span></article>
+      <article class="qcard"><span class="qcard__q">Qui ?</span><p>Corentin, Lucas et Sam. Fournisseur en Chine encore à décider.</p><span class="qcard__n">04</span></article>
+      <article class="qcard"><span class="qcard__q">Comment ?</span><p>Vente via un compte Vinted, marketing sur les réseaux sociaux.</p><span class="qcard__n">05</span></article>
+      <article class="qcard"><span class="qcard__q">Pourquoi ?</span><p>La mode nous tient à cœur. L'occasion de tester nos compétences en commerce, marketing digital et relation client.</p><span class="qcard__n">06</span></article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 05 EUX vs NOUS ============ -->
+<section class="section vs" id="eux-vs-nous" data-slide="Eux vs Nous" data-bg="#E4DDCF" data-fg="#191917">
+  <svg class="watermark watermark--vs" viewBox="0 0 100 100" aria-hidden="true"><use href="#star"/></svg>
+  <div class="section__head">
+    <p class="eyebrow">03 — Zéro bullshit</p>
+    <h2 class="h2" data-split>Les autres marques.<br>Et nous.</h2>
+    <p class="section__lead">Cliquez sur une carte pour la retourner.</p>
+  </div>
+  <div class="vs__grid">
+    <button class="flip" data-flip aria-pressed="false">
+      <span class="flip__inner">
+        <span class="flip__face flip__face--front"><span class="flip__tag">Eux</span><span class="flip__txt">Une marque comme les autres</span><span class="flip__icon flip__icon--x" aria-label="non"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></span></span>
+        <span class="flip__face flip__face--back"><span class="flip__tag">Mérova</span><span class="flip__txt">Une marque solidaire</span><span class="flip__icon flip__icon--ok" aria-label="oui"><svg viewBox="0 0 24 24"><path d="M4.5 12.5l5 5L19.5 7"/></svg></span></span>
+      </span>
+    </button>
+    <button class="flip" data-flip aria-pressed="false">
+      <span class="flip__inner">
+        <span class="flip__face flip__face--front"><span class="flip__tag">Eux</span><span class="flip__txt">Prix élevé</span><span class="flip__icon flip__icon--x" aria-label="non"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></span></span>
+        <span class="flip__face flip__face--back"><span class="flip__tag">Mérova</span><span class="flip__txt">Prix lycéen : 10€ la casquette, 25€ le t-shirt</span><span class="flip__icon flip__icon--ok" aria-label="oui"><svg viewBox="0 0 24 24"><path d="M4.5 12.5l5 5L19.5 7"/></svg></span></span>
+      </span>
+    </button>
+    <button class="flip" data-flip aria-pressed="false">
+      <span class="flip__inner">
+        <span class="flip__face flip__face--front"><span class="flip__tag">Eux</span><span class="flip__txt">Sans impact</span><span class="flip__icon flip__icon--x" aria-label="non"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></span></span>
+        <span class="flip__face flip__face--back"><span class="flip__tag">Mérova</span><span class="flip__txt">Reversé à une association : Le Petit Monde</span><span class="flip__icon flip__icon--ok" aria-label="oui"><svg viewBox="0 0 24 24"><path d="M4.5 12.5l5 5L19.5 7"/></svg></span></span>
+      </span>
+    </button>
+    <button class="flip" data-flip aria-pressed="false">
+      <span class="flip__inner">
+        <span class="flip__face flip__face--front"><span class="flip__tag">Eux</span><span class="flip__txt">Des promesses floues</span><span class="flip__icon flip__icon--x" aria-label="non"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></span></span>
+        <span class="flip__face flip__face--back"><span class="flip__tag">Mérova</span><span class="flip__txt">Un objectif chiffré : 50 articles, 1 025€</span><span class="flip__icon flip__icon--ok" aria-label="oui"><svg viewBox="0 0 24 24"><path d="M4.5 12.5l5 5L19.5 7"/></svg></span></span>
+      </span>
+    </button>
+  </div>
+</section>
+
+<!-- ============ 06 LE PETIT MONDE ============ -->
+<section class="section asso" id="le-petit-monde" data-slide="Le Petit Monde" data-bg="#B5452B" data-fg="#F4EDE4">
+  <svg class="watermark watermark--asso" viewBox="0 0 100 100" aria-hidden="true"><use href="#star"/></svg>
+  <div class="asso__inner">
+    <p class="eyebrow">04 — Association partenaire</p>
+    <h2 class="asso__title" data-split>Le Petit<br>Monde.</h2>
+    <ul class="asso__list">
+      <li data-reveal><span>01</span>Donne du sens au projet</li>
+      <li data-reveal><span>02</span>Une cause à défendre</li>
+      <li data-reveal><span>03</span>Motive l'achat</li>
+      <li data-reveal><span>04</span>Valorise l'aspect solidaire</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ 07 OBJECTIFS ============ -->
+<section class="section goals" id="objectifs" data-slide="Objectifs" data-bg="#191917" data-fg="#EEEEEE">
+  <div class="section__head">
+    <p class="eyebrow">05 — Objectifs</p>
+    <h2 class="h2" data-split>Des chiffres.<br>Pas des promesses.</h2>
+  </div>
+  <div class="goals__big">
+    <div class="stat" data-reveal><span class="stat__num" data-count="50">0</span><span class="stat__label">articles vendus</span></div>
+    <div class="stat" data-reveal><span class="stat__num"><span data-count="1025" data-format="space">0</span>€</span><span class="stat__label">collectés pour Le Petit Monde</span></div>
+  </div>
+  <div class="calc" data-reveal>
+    <div class="calc__row"><span class="calc__q"><b data-count="15">0</b> casquettes</span><span class="calc__x">× 10€</span><span class="calc__eq">= <b data-count="150">0</b>€</span></div>
+    <div class="calc__row"><span class="calc__q"><b data-count="35">0</b> t-shirts</span><span class="calc__x">× 25€</span><span class="calc__eq">= <b data-count="875">0</b>€</span></div>
+    <div class="calc__row calc__row--total"><span class="calc__q">50 articles</span><span class="calc__x"></span><span class="calc__eq">= 1 025€</span></div>
+  </div>
+  <div class="goals__cols">
+    <div class="gcol" data-reveal>
+      <h3>Quantitatifs</h3>
+      <ul><li>50 articles vendus</li><li>1 025€ collectés</li><li>Toucher un maximum de personnes</li><li>Améliorer la visibilité sur les réseaux sociaux</li></ul>
+    </div>
+    <div class="gcol" data-reveal>
+      <h3>Qualitatifs</h3>
+      <ul><li>Satisfaction client</li><li>Image positive</li><li>Faire connaître la cause</li><li>Communication efficace</li></ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 08 BESOINS ============ -->
+<section class="section needs" id="besoins" data-slide="Besoins" data-bg="#EEEEEE" data-fg="#191917">
+  <div class="section__head">
+    <p class="eyebrow">06 — Besoins</p>
+    <h2 class="h2" data-split>Ce qu'il nous faut<br>pour y arriver.</h2>
+  </div>
+  <div class="needs__list">
+    <div class="need" data-reveal><span class="need__n">01</span><h3>Financiers</h3><p>Budget de production et de communication.</p></div>
+    <div class="need" data-reveal><span class="need__n">02</span><h3>Humains</h3><p>Les trois associés.</p></div>
+    <div class="need" data-reveal><span class="need__n">03</span><h3>Réglementaires</h3><p>SIRET, statut, compte pro.</p></div>
+    <div class="need" data-reveal><span class="need__n">04</span><h3>Matériels</h3><p>Vêtements, ordinateur, stockage. Livraison via Vinted.</p></div>
+    <div class="need" data-reveal><span class="need__n">05</span><h3>Communication</h3><p>Logo, réseaux sociaux, posts, aspect solidaire.</p></div>
+  </div>
+</section>
+
+<!-- ============ 09 SMART ============ -->
+<section class="section smart" id="smart" data-slide="Objectif SMART" data-bg="#C9B99F" data-fg="#191917">
+  <svg class="watermark watermark--smart" viewBox="0 0 100 100" aria-hidden="true"><use href="#star"/></svg>
+  <div class="section__head">
+    <p class="eyebrow">07 — Objectif SMART</p>
+    <h2 class="h2" data-split>Un objectif<br>qui tient debout.</h2>
+  </div>
+  <div class="smart__rows">
+    <div class="srow" data-reveal><span class="srow__l">S</span><div><h3>Simple</h3><p>Créer et vendre une gamme de vêtements solidaires pour collecter des fonds pour Le Petit Monde.</p></div></div>
+    <div class="srow" data-reveal><span class="srow__l">M</span><div><h3>Mesurable</h3><p>50 articles → 1 025€ (15 casquettes à 10€, 35 t-shirts à 25€).</p></div></div>
+    <div class="srow" data-reveal><span class="srow__l">A</span><div><h3>Atteignable</h3><p>Via l'entourage et les réseaux sociaux.</p></div></div>
+    <div class="srow" data-reveal><span class="srow__l">R</span><div><h3>Réalisable</h3><p>Les ressources (communication, organisation, fournisseurs) sont accessibles.</p></div></div>
+    <div class="srow" data-reveal><span class="srow__l">T</span><div><h3>Temporellement défini</h3><p>Projet finalisé avant la fin de l'année scolaire.</p></div></div>
+  </div>
+</section>
+
+<!-- ============ 10 SWOT ============ -->
+<section class="section swot" id="swot" data-slide="Analyse SWOT" data-bg="#EEEEEE" data-fg="#191917">
+  <div class="section__head">
+    <p class="eyebrow">08 — Analyse SWOT</p>
+    <h2 class="h2" data-split>On regarde tout.<br>Même ce qui fâche.</h2>
+  </div>
+  <div class="swot__grid">
+    <div class="sw sw--s" data-reveal><span class="sw__l">S</span><h3>Forces</h3><ul><li>Côté solidaire qui rend le projet utile</li><li>Image positive</li><li>Équipe motivée</li><li>Une idée qui change de l'habituel</li></ul></div>
+    <div class="sw sw--w" data-reveal><span class="sw__l">W</span><h3>Faiblesses</h3><ul><li>Budget limité</li><li>Marque inconnue au lancement</li><li>Peu d'expérience</li><li>Dépend des résultats de vente</li></ul></div>
+    <div class="sw sw--o" data-reveal><span class="sw__l">O</span><h3>Opportunités</h3><ul><li>Intérêt croissant pour le solidaire en 2026</li><li>Réseaux sociaux</li><li>Événements au lycée</li></ul></div>
+    <div class="sw sw--t" data-reveal><span class="sw__l">T</span><h3>Menaces</h3><ul><li>Marques concurrentes</li><li>Risque de ne pas atteindre les objectifs</li><li>Coûts qui dépassent le budget</li><li>Communication insuffisante</li></ul></div>
+  </div>
+</section>
+
+<!-- ============ 11 COMPÉTENCES ============ -->
+<section class="section skills" id="competences" data-slide="Compétences MCV" data-bg="#2F3B2E" data-fg="#EEEEEE">
+  <div class="section__head">
+    <p class="eyebrow">09 — Compétences Bac Pro MCV</p>
+    <h2 class="h2" data-split>Ce que le projet<br>nous fait pratiquer.</h2>
+  </div>
+  <div class="skills__list">
+    <details class="skill" data-reveal open><summary><span class="skill__n">01</span><span class="skill__t">Animation et vente</span><span class="skill__plus"></span></summary><div class="skill__body"><p>Présenter, argumenter, conclure une vente.</p></div></details>
+    <details class="skill" data-reveal open><summary><span class="skill__n">02</span><span class="skill__t">Relation client</span><span class="skill__plus"></span></summary><div class="skill__body"><p>Gérer les retours Vinted : problème de taille, défaut.</p></div></details>
+    <details class="skill" data-reveal open><summary><span class="skill__n">03</span><span class="skill__t">Offre commerciale</span><span class="skill__plus"></span></summary><div class="skill__body"><p>Merchandising, identité de marque.</p></div></details>
+    <details class="skill" data-reveal open><summary><span class="skill__n">04</span><span class="skill__t">Gestion commerciale</span><span class="skill__plus"></span></summary><div class="skill__body"><p>Objectifs, stocks, suivi des résultats, analyse.</p></div></details>
+  </div>
+</section>
+
+<!-- ============ 12 RÉTRO-PLANNING ============ -->
+<section class="section plan" id="planning" data-slide="Rétro-planning" data-bg="#191917" data-fg="#EEEEEE">
+  <div class="section__head">
+    <p class="eyebrow">10 — Rétro-planning</p>
+    <h2 class="h2" data-split>De juin 2026<br>au jour J.</h2>
+  </div>
+  <div class="timeline" id="timeline">
+    <div class="timeline__line"><i id="timelineFill"></i></div>
+    <div class="tl" data-tl><div class="tl__dot"></div><div class="tl__when"><b>Juin 2026</b><span>J-4 mois</span></div><ul class="tl__what"><li>Contacter Le Petit Monde</li><li>Chercher les fournisseurs</li><li>Créer le site, le logo, les visuels</li></ul></div>
+    <div class="tl" data-tl><div class="tl__dot"></div><div class="tl__when"><b>Fin août 2026</b><span>J-2 mois</span></div><ul class="tl__what"><li>Commander les vêtements (apport de 150€ par personne)</li><li>Fixer les prix</li></ul></div>
+    <div class="tl" data-tl><div class="tl__dot"></div><div class="tl__when"><b>Septembre 2026</b><span>J-1 mois</span></div><ul class="tl__what"><li>Réception des produits</li><li>Préparer et lancer la campagne de communication</li></ul></div>
+    <div class="tl" data-tl><div class="tl__dot"></div><div class="tl__when"><b>J-2 semaines</b><span>Logistique</span></div><ul class="tl__what"><li>Organiser les ventes : emballage, sacs</li></ul></div>
+    <div class="tl tl--j" data-tl><div class="tl__dot"></div><div class="tl__when"><b>Début octobre 2026</b><span>Jour J</span></div><ul class="tl__what"><li>Lancer la vente</li><li>Suivi client, envoi des colis et SAV</li><li>Calculer et remettre les bénéfices à l'association</li></ul></div>
+  </div>
+  <div class="plan__always" data-reveal>
+    <span class="plan__pulse"></span>
+    <p><b>Poste de vente actif en continu</b>, du lancement à la clôture. Responsables : les 3 associés.</p>
+  </div>
+</section>
+
+<!-- ============ 13 PLAN DE COM ============ -->
+<section class="section com" id="communication" data-slide="Plan de communication" data-bg="#EEEEEE" data-fg="#191917">
+  <div class="section__head">
+    <p class="eyebrow">11 — Plan de communication</p>
+    <h2 class="h2" data-split>Qui on touche.<br>Comment. Pour combien.</h2>
+  </div>
+  <div class="com__table" role="table" aria-label="Plan de communication">
+    <div class="com__row com__row--head" role="row">
+      <span role="columnheader">Objectif</span><span role="columnheader">Cible</span><span role="columnheader">Message</span><span role="columnheader">Canaux</span><span role="columnheader">Quand</span><span role="columnheader">Budget</span>
+    </div>
+    <div class="com__row" role="row" data-reveal>
+      <span role="cell" data-l="Objectif" class="com__obj">Notoriété</span><span role="cell" data-l="Cible">Élèves & entourage</span><span role="cell" data-l="Message">Informer et capter l'attention</span><span role="cell" data-l="Canaux">Affiches, réseaux sociaux</span><span role="cell" data-l="Quand">Lancement</span><span role="cell" data-l="Budget" class="com__bud">10€</span>
+    </div>
+    <div class="com__row" role="row" data-reveal>
+      <span role="cell" data-l="Objectif" class="com__obj">Ventes</span><span role="cell" data-l="Cible">Élèves & familles</span><span role="cell" data-l="Message">Valoriser les produits et l'impact solidaire</span><span role="cell" data-l="Canaux">Réseaux sociaux, bouche-à-oreille</span><span role="cell" data-l="Quand">Période de vente</span><span role="cell" data-l="Budget" class="com__bud">15€</span>
+    </div>
+    <div class="com__row" role="row" data-reveal>
+      <span role="cell" data-l="Objectif" class="com__obj">Fidélisation</span><span role="cell" data-l="Cible">Acheteurs & partenaires</span><span role="cell" data-l="Message">Célébrer les résultats, remercier</span><span role="cell" data-l="Canaux">Réseaux sociaux</span><span role="cell" data-l="Quand">Clôture</span><span role="cell" data-l="Budget" class="com__bud">Gratuit</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 14 EN PRATIQUE ============ -->
+<section class="section where" id="en-pratique" data-slide="En pratique" data-bg="#191917" data-fg="#EEEEEE">
+  <div class="section__head">
+    <p class="eyebrow">12 — En pratique</p>
+    <h2 class="h2" data-split>Où nous trouver.</h2>
+  </div>
+  <div class="where__grid">
+    <div class="wcard" data-reveal><span class="wcard__k">Site internet</span><span class="wcard__v">Boutique en ligne</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg></div>
+    <div class="wcard" data-reveal><span class="wcard__k">Vinted</span><span class="wcard__v">merovaclub</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12l2 5-2 11H6L4 9z"/><path d="M9 4c0 2 1.3 3 3 3s3-1 3-3"/></svg></div>
+    <div class="wcard" data-reveal><span class="wcard__k">Instagram</span><span class="wcard__v">@merova_club</span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6"/></svg></div>
+  </div>
+</section>
+
+<!-- ============ 15 FAQ ============ -->
+<section class="section faq" id="faq" data-slide="FAQ" data-bg="#E4DDCF" data-fg="#191917">
+  <div class="section__head">
+    <p class="eyebrow">13 — Questions</p>
+    <h2 class="h2" data-split>Les questions<br>qu'on nous pose.</h2>
+  </div>
+  <div class="faq__list">
+    <div class="qa"><button class="qa__q" aria-expanded="false"><span>Mérova, c'est quoi ?</span><i></i></button><div class="qa__a"><p>Une marque de tee-shirts et de casquettes solidaire, créée par trois élèves de Bac Pro Management Commercial dans le cadre de leur chef d'œuvre.</p></div></div>
+    <div class="qa"><button class="qa__q" aria-expanded="false"><span>Où va l'argent ?</span><i></i></button><div class="qa__a"><p>À l'association Le Petit Monde. À la clôture, on calcule les bénéfices et on les remet à l'association. Objectif : 1 025€.</p></div></div>
+    <div class="qa"><button class="qa__q" aria-expanded="false"><span>Combien ça coûte ?</span><i></i></button><div class="qa__a"><p>10€ la casquette, 25€ le t-shirt. Des prix pensés pour des lycéens.</p></div></div>
+    <div class="qa"><button class="qa__q" aria-expanded="false"><span>Où acheter ?</span><i></i></button><div class="qa__a"><p>Sur Vinted (compte <b>merovaclub</b>) et sur notre site internet. Toutes les news sur Instagram : <b>@merova_club</b>.</p></div></div>
+    <div class="qa"><button class="qa__q" aria-expanded="false"><span>Quand commence la vente ?</span><i></i></button><div class="qa__a"><p>Début octobre 2026. Le poste de vente reste actif en continu jusqu'à la clôture.</p></div></div>
+    <div class="qa"><button class="qa__q" aria-expanded="false"><span>Comment est financée la production ?</span><i></i></button><div class="qa__a"><p>Chaque associé apporte 150€ pour commander les vêtements, fin août 2026.</p></div></div>
+    <div class="qa"><button class="qa__q" aria-expanded="false"><span>Qui fabrique les vêtements ?</span><i></i></button><div class="qa__a"><p>Un fournisseur en Chine, encore à décider.</p></div></div>
+    <div class="qa"><button class="qa__q" aria-expanded="false"><span>Pourquoi ce projet ?</span><i></i></button><div class="qa__a"><p>La mode nous tient à cœur. Et c'est l'occasion de tester pour de vrai nos compétences en commerce, marketing digital et relation client.</p></div></div>
+  </div>
+</section>
+
+<!-- ============ 16 MERCI + FOOTER ============ -->
+<section class="thanks" id="merci" data-slide="Merci" data-bg="#191917" data-fg="#EEEEEE">
+  <svg class="watermark watermark--thanks" viewBox="0 0 100 100" aria-hidden="true"><use href="#star"/></svg>
+  <div class="thanks__inner">
+    <h2 class="thanks__word" aria-label="Merci"><span>M</span><span>E</span><span>R</span><span>C</span><span>I</span></h2>
+    <p class="thanks__by">Présenté par <b>Sam Aboulkheir</b>, <b>Corentin Guillard</b> et <b>Lucas Fournier</b></p>
+  </div>
+  <footer class="footer">
+    <div class="footer__logo">
+      <!--LOGO-->
+      <svg class="logo-star" viewBox="0 0 100 100" aria-hidden="true"><use href="#star"/></svg>
+      <span class="logo-word">MÉROVA</span>
+      <!--/LOGO-->
+    </div>
+    <ul class="footer__social">
+      <li><a href="https://www.instagram.com/merova_club/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6"/></svg>Instagram · merova_club</a></li>
+      <li><span class="footer__link"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12l2 5-2 11H6L4 9z"/><path d="M9 4c0 2 1.3 3 3 3s3-1 3-3"/></svg>Vinted · merovaclub</span></li>
+      <li><span class="footer__link"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg>Boutique en ligne</span></li>
+    </ul>
+    <div class="footer__meta">
+      <span>Chef d'œuvre Bac Pro Management Commercial · 2026–2027</span>
+      <span>Chaque vente finance Le Petit Monde</span>
+      <button class="footer__top" data-goto="hero">Retour en haut ↑</button>
+    </div>
+  </footer>
+</section>
+
+</main>
+
+<script>/*INLINE:vendor*/</script>
+<script>/*INLINE:main.js*/</script>
+</body>
+</html>

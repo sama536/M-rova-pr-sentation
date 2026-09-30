@@ -1,0 +1,1 @@
+Déposez ici logo.png, tshirt.png, casquette.png puis lancez : npm run build
