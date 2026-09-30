@@ -7,6 +7,7 @@
   const $ = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => Array.from(c.querySelectorAll(s));
   const root = document.documentElement;
+  document.body.classList.add("is-loading");
   const params = new URLSearchParams(location.search);
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches || params.has("reduced");
   if (reduced) root.classList.add("reduced");

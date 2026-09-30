@@ -128,7 +128,7 @@ ul, ol { padding: 0; list-style: none; }
 .nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
-  padding: 18px var(--gutter);
+  padding: calc(18px + env(safe-area-inset-top, 0px)) var(--gutter) 18px;
   color: var(--fg);
   pointer-events: none;
 }
@@ -166,7 +166,7 @@ ul, ol { padding: 0; list-style: none; }
 .menu__foot { position: absolute; left: var(--gutter); right: var(--gutter); bottom: 24px; display: flex; gap: 32px; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; opacity: .5; }
 
 .hud {
-  position: fixed; left: var(--gutter); right: var(--gutter); bottom: 16px; z-index: 100;
+  position: fixed; left: var(--gutter); right: var(--gutter); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 100;
   display: flex; align-items: center; gap: 20px;
   color: var(--fg); pointer-events: none;
   font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
