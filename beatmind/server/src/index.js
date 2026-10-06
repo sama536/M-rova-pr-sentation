@@ -11,6 +11,7 @@ import youtube from './routes/youtube.js';
 import lyrics from './routes/lyrics.js';
 import voice from './routes/voice.js';
 import credits from './routes/credits.js';
+import settings from './routes/settings.js';
 
 const app = express();
 app.use(cors({ origin: true, exposedHeaders: ['x-credits-balance'] }));
@@ -18,6 +19,7 @@ app.use(express.json({ limit: '2mb' }));
 app.use('/uploads', express.static(UPLOAD_DIR, { maxAge: '7d' }));
 
 app.get('/api/health', (_req, res) => res.json({ ok: true, services, model: config.anthropic.model }));
+app.use('/api/settings', settings);
 app.use('/api', identify);
 app.use('/api/beat', beat);
 app.use('/api/youtube', youtube);

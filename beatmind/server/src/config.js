@@ -11,24 +11,34 @@ if (process.env.BEATMIND_ENV_FILE) dotenv.config({ path: process.env.BEATMIND_EN
 
 const env = (k, d = '') => (process.env[k] ?? d).trim();
 
-export const config = {
-  port: Number(env('PORT', '8787')),
-  clientOrigin: env('CLIENT_ORIGIN', 'http://localhost:5173'),
-  anthropic: { apiKey: env('ANTHROPIC_API_KEY'), model: env('CLAUDE_MODEL', 'claude-opus-5-5') },
-  suno: { baseUrl: env('SUNO_API_URL').replace(/\/$/, ''), apiKey: env('SUNO_API_KEY') },
-  elevenlabs: { apiKey: env('ELEVENLABS_API_KEY'), modelId: env('ELEVENLABS_MODEL_ID', 'eleven_multilingual_v2') },
-  youtube: { apiKey: env('YOUTUBE_API_KEY') },
-  supabase: {
-    url: env('SUPABASE_URL') || env('VITE_SUPABASE_URL'),
-    serviceRoleKey: env('SUPABASE_SERVICE_ROLE_KEY'),
-    anonKey: env('VITE_SUPABASE_ANON_KEY'),
-  },
-};
+export const config = {};
+export const services = {};
 
-export const services = {
-  claude: !!config.anthropic.apiKey,
-  suno: !!config.suno.baseUrl,
-  elevenlabs: !!config.elevenlabs.apiKey,
-  youtube: !!config.youtube.apiKey,
-  supabase: !!(config.supabase.url && config.supabase.serviceRoleKey),
-};
+// Relit process.env et met à jour config / services EN PLACE (les modules qui les importent voient les changements).
+// Appelé au démarrage et quand l'utilisateur enregistre ses clés depuis l'app.
+export function loadConfig() {
+  Object.assign(config, {
+    port: Number(env('PORT', '8787')),
+    clientOrigin: env('CLIENT_ORIGIN', 'http://localhost:5173'),
+    anthropic: { apiKey: env('ANTHROPIC_API_KEY'), model: env('CLAUDE_MODEL', 'claude-opus-5-5') },
+    suno: { baseUrl: env('SUNO_API_URL').replace(/\/$/, ''), apiKey: env('SUNO_API_KEY') },
+    elevenlabs: { apiKey: env('ELEVENLABS_API_KEY'), modelId: env('ELEVENLABS_MODEL_ID', 'eleven_multilingual_v2') },
+    youtube: { apiKey: env('YOUTUBE_API_KEY') },
+    supabase: {
+      url: env('SUPABASE_URL') || env('VITE_SUPABASE_URL'),
+      serviceRoleKey: env('SUPABASE_SERVICE_ROLE_KEY'),
+      anonKey: env('VITE_SUPABASE_ANON_KEY'),
+    },
+  });
+  Object.assign(services, {
+    claude: !!config.anthropic.apiKey,
+    suno: !!config.suno.baseUrl,
+    elevenlabs: !!config.elevenlabs.apiKey,
+    youtube: !!config.youtube.apiKey,
+    supabase: !!(config.supabase.url && config.supabase.serviceRoleKey),
+  });
+}
+loadConfig();
+
+// Fichier .env modifiable depuis l'app : celui de l'app de bureau, sinon beatmind/.env
+export const ENV_FILE = process.env.BEATMIND_ENV_FILE || path.resolve(here, '../../.env');

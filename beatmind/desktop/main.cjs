@@ -96,17 +96,11 @@ function buildMenu() {
       label: 'BeatMind',
       submenu: [
         {
-          label: 'Configurer les clés API…',
-          click: async () => {
-            await shell.openPath(envFile);
-            dialog.showMessageBox(win, {
-              type: 'info',
-              title: 'Clés API',
-              message: 'Le fichier de configuration est ouvert.',
-              detail: 'Ajoute tes clés (Claude, Suno, ElevenLabs, YouTube, Supabase), enregistre, puis redémarre BeatMind.',
-            });
-          },
+          label: 'Clés API (Claude, ElevenLabs, Suno)…',
+          accelerator: 'CmdOrCtrl+,',
+          click: () => win?.webContents.executeJavaScript("window.dispatchEvent(new Event('beatmind:open-keys'))"),
         },
+        { label: 'Ouvrir le fichier de configuration (.env)', click: () => shell.openPath(envFile) },
         { label: 'Ouvrir le dossier des données', click: () => shell.openPath(app.getPath('userData')) },
         { type: 'separator' },
         { label: 'Redémarrer BeatMind', click: () => { app.relaunch(); app.exit(0); } },

@@ -16,6 +16,8 @@ const initial = () => ({
   instruments: [],
   customInstruments: [],
   references: [],
+  pendingRefs: [],
+  referenceWeight: 0.7,
   params: null,
   suno: null,
   voices: [],
@@ -27,7 +29,7 @@ const initial = () => ({
   savedRevision: 0,
 });
 
-const SNAPSHOT_KEYS = ['title', 'prompt', 'styles', 'instruments', 'customInstruments', 'references', 'params', 'suno', 'voices', 'lyrics', 'vocalTimeline', 'takes', 'masterVolume'];
+const SNAPSHOT_KEYS = ['title', 'prompt', 'styles', 'instruments', 'customInstruments', 'references', 'pendingRefs', 'referenceWeight', 'params', 'suno', 'voices', 'lyrics', 'vocalTimeline', 'takes', 'masterVolume'];
 
 function defaultFlow(type, styles = []) {
   const rap = styles.some((s) => ['trap', 'drill', 'boombap', 'phonk', 'rage', 'opium', 'cloudrap'].includes(s));
@@ -124,7 +126,7 @@ export const useProject = create(persist((set, get) => {
       const s = get();
       if (!s.params) return;
       const next = { ...s.params, ...patch };
-      const structural = ['key', 'scale', 'progression', 'structure', 'drums', 'styles'].some((k) => k in patch);
+      const structural = ['key', 'scale', 'progression', 'structure', 'drums', 'styles', 'arrangement'].some((k) => k in patch);
       if (structural) {
         next.tracks = next.tracks.map((t) => (t.kind === 'audio' || t.edited ? t : { ...t, notes: arrangeTrack(next, t) }));
       }

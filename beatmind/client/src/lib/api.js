@@ -45,6 +45,8 @@ export const api = {
     form.append('name', name);
     return request('/api/voice/clone', { method: 'POST', form, action: 'voiceClone' });
   },
+  getKeys: () => request('/api/settings/keys'),
+  saveKeys: (values) => request('/api/settings/keys', { method: 'PUT', body: { values } }),
   synthesize: (payload) => request('/api/voice/synthesize', { method: 'POST', body: payload, action: 'voiceSynth' }),
 };
 

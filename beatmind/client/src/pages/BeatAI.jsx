@@ -5,7 +5,7 @@ import { Page } from '../components/Layout.jsx';
 import SectionHeader from '../components/ui/SectionHeader.jsx';
 import Chip from '../components/ui/Chip.jsx';
 import Waveform from '../components/ui/Waveform.jsx';
-import ReferenceInput from '../components/beat/ReferenceInput.jsx';
+import ReferenceInput, { analyzePendingReferences } from '../components/beat/ReferenceInput.jsx';
 import BeatParamsEditor from '../components/beat/BeatParamsEditor.jsx';
 import { toast } from '../components/ui/Toaster.jsx';
 import { useProject } from '../store/project.js';
@@ -63,14 +63,20 @@ export default function BeatAI() {
   }, [s.suno]);
 
   const generate = async () => {
-    if (!s.prompt.trim() && !s.styles.length) return toast.error('Écris un prompt ou choisis au moins un style.');
+    if (!s.prompt.trim() && !s.styles.length && !s.references.length && !s.pendingRefs.length) return toast.error('Écris un prompt, choisis un style ou colle une référence YouTube.');
     setBusy(true);
     setStep(0);
     const timer = setInterval(() => setStep((x) => Math.min(x + 1, STEPS.length - 1)), 1600);
     try {
+      // Les liens collés mais pas encore analysés sont analysés maintenant : ils comptent dans la génération
+      let refs = s.references;
+      if (useProject.getState().pendingRefs.length) {
+        try { refs = await analyzePendingReferences(); } catch (e) { toast.error(`Références : ${e.message}`); }
+      }
       const res = await api.generateBeat({
         prompt: s.prompt, styles: s.styles, instruments: [...s.instruments, ...s.customInstruments],
-        references: s.references.map(({ title, bpm, key, flow, vibe, mood, structure, style }) => ({ title, bpm, key, flow, vibe, mood, structure, style })),
+        references: refs.map(({ thumbnail, description, url, ...rest }) => rest),
+        referenceWeight: useProject.getState().referenceWeight,
       });
       player.stop();
       s.setParams(res.params, { suno: res.suno ? { clips: res.suno, selectedId: null } : null });
@@ -170,7 +176,7 @@ export default function BeatAI() {
             <div className="mt-4 grid gap-1.5 text-xs text-zinc-400">
               <span>Styles : <span className="text-zinc-200">{s.styles.length ? s.styles.map((id) => STYLES.find((x) => x.id === id)?.label).join(' × ') : 'auto'}</span></span>
               <span>Instruments : <span className="text-zinc-200">{[...s.instruments, ...s.customInstruments].join(', ') || 'auto'}</span></span>
-              <span>Références : <span className="text-zinc-200">{s.references.length}</span></span>
+              <span>Références : <span className="text-zinc-200">{s.references.length}{s.pendingRefs.length ? ` (+${s.pendingRefs.length} à analyser)` : ''}</span>{(s.references.length > 0 || s.pendingRefs.length > 0) && <span className="text-mute"> · influence {Math.round(s.referenceWeight * 100)} %</span>}</span>
             </div>
             <button type="button" data-beates="generate" className="btn-primary mt-5 w-full py-3 text-base" onClick={generate} disabled={busy}>
               {busy ? <Loader2 size={18} className="animate-spin" /> : <Wand2 size={18} />} {s.params ? 'Regénérer' : 'Générer le beat'}
@@ -245,6 +251,12 @@ export default function BeatAI() {
                   ))}
                 </div>
               </div>
+              {s.params.referenceNotes?.length > 0 && (
+                <div className="rounded-xl border border-neon/30 bg-neon/5 p-3">
+                  <div className="label mb-2 text-neon-soft">Repris de tes références</div>
+                  <ul className="grid gap-1.5 text-[13px] text-zinc-300">{s.params.referenceNotes.map((n) => <li key={n} className="flex gap-2"><span className="text-neon-soft">▸</span>{n}</li>)}</ul>
+                </div>
+              )}
               <div>
                 <div className="label mb-2">Notes de prod</div>
                 <ul className="grid gap-1.5 text-[13px] text-zinc-300">{s.params.productionNotes?.map((n) => <li key={n} className="flex gap-2"><span className="text-neon-soft">▸</span>{n}</li>)}</ul>

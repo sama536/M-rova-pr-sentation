@@ -168,7 +168,7 @@ export const SYNTHS = {
     osc(ctx, 'sawtooth', freq, t, e.stop).connect(lp);
     osc(ctx, 'sine', freq / 2, t, e.stop).connect(e.g);
   },
-  '808'(ctx, out, t, freq, dur, vel) {
+  '808'(ctx, out, t, freq, dur, vel, _midi, glideFreq) {
     const e = env(ctx, t, { a: 0.003, d: 1.6, s: 0.55, dur: Math.max(dur, 0.25), r: 0.12, peak: vel });
     e.g.connect(out);
     const o = osc(ctx, 'sine', freq * 2.2, t, e.stop);
@@ -178,6 +178,15 @@ export const SYNTHS = {
     h.gain.value = 0.18;
     const o2 = osc(ctx, 'triangle', freq * 2, t, e.stop);
     o2.connect(h).connect(e.g);
+    if (glideFreq) {
+      // Slide d'808 (drill) : la note glisse vers la suivante sur la fin
+      const from = t + Math.max(0.06, dur * 0.55);
+      const to = t + Math.max(0.1, dur * 0.95);
+      o.frequency.setValueAtTime(freq, from);
+      o.frequency.exponentialRampToValueAtTime(glideFreq, to);
+      o2.frequency.setValueAtTime(freq * 2, from);
+      o2.frequency.exponentialRampToValueAtTime(glideFreq * 2, to);
+    }
   },
   drums(ctx, out, t, _freq, _dur, vel, midi) {
     const hit = DRUM_SYNTHS[midi] || DRUM_SYNTHS[DRUM.rim];
@@ -249,7 +258,7 @@ const DRUM_SYNTHS = {
   },
 };
 
-export function playNote(ctx, out, synth, t, midi, dur, vel) {
+export function playNote(ctx, out, synth, t, midi, dur, vel, glideMidi) {
   const fn = SYNTHS[synth] || SYNTHS.synth;
-  fn(ctx, out, t, midiToFreq(midi), dur, vel, midi);
+  fn(ctx, out, t, midiToFreq(midi), dur, vel, midi, glideMidi ? midiToFreq(glideMidi) : undefined);
 }

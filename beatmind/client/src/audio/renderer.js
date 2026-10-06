@@ -192,7 +192,7 @@ export async function renderSong(params, { trackIds, buffers = new Map(), master
       const swingOffset = Math.floor(n.s) % 2 === 1 ? swing * stepDur : 0;
       const t = n.s * stepDur + swingOffset;
       if (t >= duration) continue;
-      events.push({ t, run: () => playNote(ctx, input, track.synth, t, n.p, n.l * stepDur, n.v ?? 0.8) });
+      events.push({ t, run: () => playNote(ctx, input, track.synth, t, n.p, n.l * stepDur, n.v ?? 0.8, n.g) });
     }
   }
 

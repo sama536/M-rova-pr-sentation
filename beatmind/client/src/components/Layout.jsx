@@ -6,6 +6,7 @@ import TransportBar from './TransportBar.jsx';
 import BeatesAssistant from './beates/BeatesAssistant.jsx';
 import BeatesBot from './beates/BeatesBot.jsx';
 import { useBeates } from '../store/beates.js';
+import ApiKeysModal, { useKeysModal, useServices } from './ApiKeysModal.jsx';
 import { useAuth } from '../lib/auth.jsx';
 import { useCredits } from '../store/credits.js';
 import { getCreditsBalance, rememberDemoUser } from '../lib/db.js';
@@ -23,6 +24,18 @@ export default function Layout() {
   const balance = useCredits((s) => s.balance);
   const beatesMode = useBeates((s) => s.mode);
   const setBeatesMode = useBeates((s) => s.setMode);
+  const showKeys = useKeysModal((s) => s.show);
+  const services = useServices((s) => s.services);
+  useEffect(() => { useServices.getState().refresh(); }, []);
+  const aiOn = services ? ['claude', 'suno', 'elevenlabs'].filter((k) => services[k]).length : 0;
+  const keysButton = (compact) => (
+    <button type="button" onClick={() => { showKeys(); setOpen(false); }} title="Configurer les clés API (Claude, ElevenLabs, Suno)"
+      className={compact ? 'relative inline-flex items-center gap-1.5 rounded-lg border border-neon/40 bg-neon/10 px-2.5 py-1.5 text-xs font-semibold text-neon-glow' : 'group mb-4 flex w-full items-center justify-between rounded-xl border border-neon/40 bg-neon/10 px-3 py-2.5 text-left transition hover:border-neon hover:shadow-neon'}>
+      <span className="flex items-center gap-2"><span aria-hidden>⚙️</span><span className={compact ? '' : 'text-sm font-semibold text-white'}>Clés API</span></span>
+      {!compact && <span className={`num text-[11px] ${aiOn ? 'text-emerald-300' : 'text-mute'}`}>{services ? `${aiOn}/3 IA` : '…'}</span>}
+      {compact && <span className={`h-2 w-2 rounded-full ${aiOn ? 'bg-emerald-400' : 'bg-mute-dim'}`} />}
+    </button>
+  );
   const [open, setOpen] = useState(false);
   const nav = useNavigate();
 
@@ -35,7 +48,8 @@ export default function Layout() {
 
   const sidebar = (
     <nav className="flex h-full flex-col gap-1 p-4">
-      <Link to="/" className="mb-6 px-2" onClick={() => setOpen(false)}><Logo /></Link>
+      <Link to="/" className="mb-5 px-2" onClick={() => setOpen(false)}><Logo /></Link>
+      {keysButton(false)}
       {NAV.map(({ to, label, icon: Icon, hint }) => (
         <NavLink
           key={to}
@@ -60,8 +74,8 @@ export default function Layout() {
           <div className="rounded-xl border border-neon/30 bg-neon/5 p-3">
             <div className="label text-neon-soft">Mode démo</div>
             <p className="hint mt-1">{window.__BEATMIND_CONFIG__?.desktop
-              ? <>Données stockées sur cet ordinateur. Active les IA via le menu <span className="text-zinc-300">BeatMind → Configurer les clés API</span>.</>
-              : <>Données stockées dans ce navigateur. Ajoute tes clés dans <code className="text-zinc-300">.env</code> pour activer Supabase et les IA.</>}</p>
+              ? <>Données stockées sur cet ordinateur. Active les IA avec le bouton <button type="button" onClick={showKeys} className="text-neon-soft underline">⚙️ Clés API</button>.</>
+              : <>Données stockées dans ce navigateur. Active les IA avec le bouton <button type="button" onClick={showKeys} className="text-neon-soft underline">⚙️ Clés API</button>.</>}</p>
           </div>
         )}
         {user ? (
@@ -89,7 +103,7 @@ export default function Layout() {
       <aside className="fixed inset-y-0 left-0 z-30 hidden w-60 border-r border-white/[0.06] bg-ink/80 backdrop-blur-xl lg:block">{sidebar}</aside>
       <header className="sticky top-0 z-30 flex items-center justify-between border-b border-white/[0.06] bg-ink/85 px-4 py-3 backdrop-blur-xl lg:hidden">
         <Link to="/"><Logo /></Link>
-        <button type="button" onClick={() => setOpen(true)} className="p-2" aria-label="Menu"><Menu size={20} /></button>
+        <span className="flex items-center gap-2">{keysButton(true)}<button type="button" onClick={() => setOpen(true)} className="p-2" aria-label="Menu"><Menu size={20} /></button></span>
       </header>
       {open && (
         <div className="fixed inset-0 z-50 bg-black/70 lg:hidden" onClick={() => setOpen(false)}>
@@ -104,6 +118,7 @@ export default function Layout() {
       </main>
       <TransportBar />
       <BeatesAssistant />
+      <ApiKeysModal />
     </div>
   );
 }

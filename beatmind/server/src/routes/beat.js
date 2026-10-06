@@ -9,12 +9,21 @@ const r = Router();
 
 r.post('/generate', requireUser, charge('beat'), async (req, res, next) => {
   try {
-    const { prompt = '', styles = [], instruments = [], references = [] } = req.body || {};
+    const { prompt = '', styles = [], instruments = [], references = [], referenceWeight = 0.7 } = req.body || {};
+    const clip = (v, n = 300) => (typeof v === 'string' ? v.slice(0, n) : v);
+    const cleanRefs = references.slice(0, 5).map((r) => ({
+      title: clip(r.title, 200), channel: clip(r.channel, 100), style: clip(r.style, 20), bpm: Number(r.bpm) || null,
+      key: clip(r.key, 3), scale: clip(r.scale, 20), drumPattern: clip(r.drumPattern, 20),
+      instruments: (r.instruments || []).slice(0, 10).map((x) => clip(String(x), 30)),
+      traits: (r.traits || []).slice(0, 6).map((x) => clip(String(x), 300)),
+      flow: clip(r.flow), vibe: clip(r.vibe, 80), mood: clip(r.mood, 60), structure: clip(r.structure, 200), energy: Number(r.energy) || null,
+    }));
     const { params, warning } = await generateBeat({
       prompt: String(prompt).slice(0, 2000),
       styles: styles.slice(0, 15),
       instruments: instruments.slice(0, 20).map(String),
-      references: references.slice(0, 5),
+      references: cleanRefs,
+      referenceWeight: Math.min(1, Math.max(0, Number(referenceWeight) || 0)),
     });
     let suno = null;
     let sunoWarning;
@@ -22,7 +31,9 @@ r.post('/generate', requireUser, charge('beat'), async (req, res, next) => {
       try {
         suno = await startBeat(params);
       } catch (err) {
-        sunoWarning = `Suno indisponible (${err.message}). Le beat est rendu par le moteur BeatMind.`;
+        sunoWarning = /fetch failed|ECONNREFUSED|ENOTFOUND/i.test(err.message)
+          ? `Suno injoignable à l'adresse ${config.suno.baseUrl} : vérifie que ton API Suno tourne (⚙️ Clés API). Le beat est rendu par le moteur BeatMind.`
+          : `Suno indisponible (${err.message.slice(0, 120)}). Le beat est rendu par le moteur BeatMind.`;
       }
     }
     res.json({ params, suno, warnings: [warning, sunoWarning].filter(Boolean), cost: req.creditCost });
