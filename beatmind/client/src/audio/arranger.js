@@ -162,7 +162,8 @@ export function arrangeTrack(params, track) {
           const m = motif[half + k];
           const variation = section.type === 'refrain' && bar % 4 === 3 ? 1 : 0;
           if (!m.on) continue;
-          const deg = chord + [0, 2, 4][m.deg % 3] + (m.deg > 4 ? 7 : 0) + variation;
+          // Notes de l'accord ramenées dans une seule octave : la mélodie reste dans la tessiture (≈ C5–C6)
+          const deg = ((chord + [0, 2, 4][m.deg % 3]) % 7) + (m.deg > 5 ? -2 : 0) + variation;
           notes.push(note(degreeToMidi(params, deg, oct), base + k * 4, k === 3 ? 4 : 3, 0.7));
         }
         break;
