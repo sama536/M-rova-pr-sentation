@@ -3,8 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "description": "BeatMind — studio de création musicale assisté par IA",
-  "workspaces": ["client", "server"],
+  "workspaces": [
+    "client",
+    "server"
+  ],
   "scripts": {
+    "predev": "node scripts/preflight.mjs",
     "dev": "concurrently -k -n api,web -c magenta,blue \"npm run dev -w server\" \"npm run dev -w client\"",
     "build": "npm run build -w client",
     "start": "npm run start -w server"

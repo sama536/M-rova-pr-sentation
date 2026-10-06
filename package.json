@@ -4,7 +4,9 @@
   "private": true,
   "description": "Site de présentation Mérova — chef d'œuvre Bac Pro MCV",
   "scripts": {
-    "build": "node build.mjs"
+    "build": "node build.mjs",
+    "dev": "npm --prefix beatmind run dev",
+    "beatmind:install": "npm --prefix beatmind install"
   },
   "devDependencies": {
     "@fontsource/anton": "^5.3.0",

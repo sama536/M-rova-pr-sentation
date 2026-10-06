@@ -14,11 +14,22 @@ Prérequis : **Node.js 18.17+** (20 ou 22 recommandé).
 
 ```bash
 cd beatmind
-npm install
 npm run dev
 ```
 
-Ouvre **http://localhost:5173**. C'est tout.
+Ouvre **http://localhost:5173**. C'est tout : au premier lancement, `npm run dev` vérifie ta version de Node
+et lance `npm install` tout seul si les dépendances manquent. Ça marche aussi depuis la racine du dépôt
+(`npm run dev` y délègue à `beatmind/`).
+
+### En cas de problème au démarrage
+
+| Message | Cause | Solution |
+| --- | --- | --- |
+| `Missing script: "dev"` | Lancé depuis un autre dossier que la racine du dépôt ou `beatmind/` | `cd beatmind` puis `npm run dev` |
+| `concurrently: not found` / `vite: not found` | Dépendances non installées (ancienne version) | `npm install` dans `beatmind/` |
+| `ERR_FEATURE_UNAVAILABLE_ON_PLATFORM … watch recursively` | Ancienne version du script avec Node 18 sous Linux | Corrigé : mets à jour le dépôt (`git pull`) |
+| `BeatMind nécessite Node.js 18.17…` | Node trop ancien | Installe Node LTS depuis nodejs.org |
+| `Le port 8787 est déjà utilisé` | Une autre instance tourne | Ferme-la, ou mets `PORT=8788` dans `.env` |
 
 Sans aucune clé, l'app tourne en **mode démo complet** :
 

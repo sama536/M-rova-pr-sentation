@@ -37,9 +37,17 @@ app.use((err, _req, res, _next) => {
   res.status(err.status || 500).json({ error: err.message || 'Erreur serveur' });
 });
 
-app.listen(config.port, () => {
+const server = app.listen(config.port, () => {
   const on = (b) => (b ? '\x1b[32m●\x1b[0m' : '\x1b[90m○\x1b[0m');
   console.log(`\n  \x1b[35mBeatMind API\x1b[0m → http://localhost:${config.port}`);
   console.log(`  ${on(services.claude)} Claude   ${on(services.suno)} Suno   ${on(services.elevenlabs)} ElevenLabs   ${on(services.youtube)} YouTube   ${on(services.supabase)} Supabase`);
   if (!Object.values(services).every(Boolean)) console.log('  Les services ○ tournent en mode démo local (voir .env.example).\n');
+});
+
+server.on('error', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    console.error(`\n✖ Le port ${config.port} est déjà utilisé (une autre instance de BeatMind tourne peut-être).`);
+    console.error('  Ferme-la, ou choisis un autre port dans .env : PORT=8788.\n');
+  } else console.error('[api] Démarrage impossible :', err.message);
+  process.exit(1);
 });
