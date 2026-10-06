@@ -172,6 +172,31 @@ gratuit · like, sauvegarde, commentaires · profil producteur public avec stati
 
 ---
 
+## Application Windows (`beatmind-setup.exe`)
+
+Un installeur clé en main : l'utilisateur le télécharge, double-clique, et BeatMind s'ouvre. **Rien à
+installer** (Node est embarqué dans l'app grâce à Electron).
+
+**Pour l'utilisateur**
+1. Double-clic sur `beatmind-setup.exe` : installation en quelques secondes (sans droits administrateur),
+   raccourcis Bureau et Menu Démarrer, puis BeatMind s'ouvre.
+2. Au premier lancement, Windows peut afficher « Windows a protégé votre ordinateur » (l'installeur n'est pas
+   signé) : **Informations complémentaires → Exécuter quand même**.
+3. L'app démarre en mode démo. Pour activer les IA : menu **BeatMind → Configurer les clés API…**
+   (fichier `%APPDATA%\BeatMind\.env`), enregistrer, puis **BeatMind → Redémarrer BeatMind**.
+4. Supabase + Google : ajouter `http://127.0.0.1:47800` aux *Redirect URLs* du projet Supabase.
+
+**Construire l'installeur**
+
+| Où | Commande | Résultat |
+| --- | --- | --- |
+| Sur Windows | `npm run desktop:win` | `desktop/dist/beatmind-setup.exe` |
+| Sur Linux | idem, avec `wine64` et `wine32:i386` installés | idem |
+| GitHub Actions | workflow « BeatMind — installeur Windows » (à chaque push sur `beatmind/**`, ou à la main) | artefact `beatmind-setup` à télécharger dans l'onglet Actions |
+
+`npm run desktop` lance l'app de bureau sans créer d'installeur. Les données de l'app (projets du mode démo,
+fichiers audio, `.env`) sont dans `%APPDATA%\BeatMind` et sont conservées lors d'une désinstallation.
+
 ## Site vitrine (`landing/`)
 
 Site statique (HTML / CSS / JS, sans build) : hero, Beat AI / Voice AI / Community, présentation de Beates,
@@ -205,6 +230,7 @@ beatmind/
 ├── brand/                  # logo B (SVG + PNG) et Beates
 ├── landing/                # site vitrine statique
 ├── scripts/                # vérif. avant démarrage, zip, serveur du site
+├── desktop/                # app de bureau Electron + installeur Windows
 ├── server/src/
 │   ├── index.js            # Express
 │   ├── config.js           # lecture du .env, détection des services

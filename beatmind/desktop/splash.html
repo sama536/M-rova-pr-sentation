@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src file: data:; style-src 'unsafe-inline'" />
+  <title>BeatMind</title>
+  <style>
+    html, body { margin: 0; height: 100%; background: #0a0a0a; color: #a78bfa; font: 600 13px system-ui, sans-serif; letter-spacing: .18em; }
+    body { display: grid; place-items: center; }
+    .box { display: grid; justify-items: center; gap: 22px; }
+    img { width: 112px; height: 112px; filter: drop-shadow(0 0 24px rgba(139, 92, 246, .8)); animation: pulse 1.6s ease-in-out infinite; }
+    .bars { display: flex; gap: 4px; height: 18px; align-items: flex-end; }
+    .bars i { width: 4px; height: 100%; border-radius: 2px; background: #a78bfa; transform-origin: bottom; animation: eq 1s ease-in-out infinite; }
+    .bars i:nth-child(2) { animation-delay: .15s } .bars i:nth-child(3) { animation-delay: .3s } .bars i:nth-child(4) { animation-delay: .45s }
+    @keyframes pulse { 50% { transform: scale(.96); opacity: .85 } }
+    @keyframes eq { 0%, 100% { transform: scaleY(.3) } 50% { transform: scaleY(1) } }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <img src="bundle/brand/logo.png" alt="" />
+    <div class="bars"><i></i><i></i><i></i><i></i></div>
+    <div>DÉMARRAGE DU STUDIO…</div>
+  </div>
+</body>
+</html>

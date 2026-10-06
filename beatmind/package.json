@@ -13,7 +13,9 @@
     "build": "npm run build -w client",
     "start": "npm run start -w server",
     "landing": "node scripts/landing.mjs",
-    "pack": "node scripts/pack.mjs"
+    "pack": "node scripts/pack.mjs",
+    "desktop": "npm --prefix desktop install && npm --prefix desktop start",
+    "desktop:win": "npm --prefix desktop install && npm --prefix desktop run dist:win"
   },
   "devDependencies": {
     "concurrently": "^9.1.2"

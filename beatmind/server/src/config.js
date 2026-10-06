@@ -6,6 +6,8 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 // Le .env vit à la racine de beatmind/ (partagé avec Vite). server/.env est accepté en surcharge.
 dotenv.config({ path: path.resolve(here, '../../.env') });
 dotenv.config({ path: path.resolve(here, '../.env'), override: true });
+// App de bureau : le .env de l'utilisateur (dans son dossier de données) a le dernier mot
+if (process.env.BEATMIND_ENV_FILE) dotenv.config({ path: process.env.BEATMIND_ENV_FILE, override: true });
 
 const env = (k, d = '') => (process.env[k] ?? d).trim();
 

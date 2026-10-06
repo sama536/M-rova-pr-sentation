@@ -1,0 +1,80 @@
+{
+  "name": "beatmind-desktop",
+  "productName": "BeatMind",
+  "version": "1.0.0",
+  "description": "BeatMind — studio de création musicale assisté par IA (application de bureau)",
+  "author": "BeatMind",
+  "license": "UNLICENSED",
+  "private": true,
+  "main": "main.cjs",
+  "scripts": {
+    "stage": "node scripts/stage.mjs",
+    "start": "npm run stage && electron .",
+    "dist:win": "npm run stage && electron-builder --win nsis --x64",
+    "dist:linux": "npm run stage && electron-builder --linux dir"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.131.0",
+    "@supabase/supabase-js": "^2.45.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "multer": "^1.4.5-lts.1"
+  },
+  "devDependencies": {
+    "electron": "^44.5.1",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "com.beatmind.studio",
+    "productName": "BeatMind",
+    "copyright": "BeatMind",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "main.cjs",
+      "splash.html",
+      "bundle/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "build/icon.ico",
+        "to": "icon.ico"
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.ico",
+      "signAndEditExecutable": true
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "runAfterFinish": true,
+      "artifactName": "beatmind-setup.exe",
+      "installerIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "BeatMind",
+      "deleteAppDataOnUninstall": false,
+      "include": "build/installer.nsh"
+    },
+    "linux": {
+      "target": "dir",
+      "icon": "build/icon.png",
+      "category": "AudioVideo"
+    },
+    "publish": null
+  }
+}

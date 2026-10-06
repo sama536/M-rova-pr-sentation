@@ -5,7 +5,10 @@ import { fileURLToPath } from 'node:url';
 import { supabaseAdmin } from './supabase.js';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-export const UPLOAD_DIR = path.resolve(here, '../../uploads');
+// App de bureau : BEATMIND_DATA_DIR pointe vers le dossier de données de l'utilisateur (l'app installée est en lecture seule)
+export const UPLOAD_DIR = process.env.BEATMIND_DATA_DIR
+  ? path.join(process.env.BEATMIND_DATA_DIR, 'uploads')
+  : path.resolve(here, '../../uploads');
 
 // Stocke un fichier audio : Supabase Storage si configuré, sinon disque local (mode démo).
 // Les échantillons de voix vont dans le bucket privé "voice-samples" (on renvoie alors le chemin, pas une URL publique).

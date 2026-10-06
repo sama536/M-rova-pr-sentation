@@ -59,7 +59,9 @@ export default function Layout() {
         {isDemo && (
           <div className="rounded-xl border border-neon/30 bg-neon/5 p-3">
             <div className="label text-neon-soft">Mode démo</div>
-            <p className="hint mt-1">Données stockées dans ce navigateur. Ajoute tes clés dans <code className="text-zinc-300">.env</code> pour activer Supabase et les IA.</p>
+            <p className="hint mt-1">{window.__BEATMIND_CONFIG__?.desktop
+              ? <>Données stockées sur cet ordinateur. Active les IA via le menu <span className="text-zinc-300">BeatMind → Configurer les clés API</span>.</>
+              : <>Données stockées dans ce navigateur. Ajoute tes clés dans <code className="text-zinc-300">.env</code> pour activer Supabase et les IA.</>}</p>
           </div>
         )}
         {user ? (

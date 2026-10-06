@@ -28,8 +28,15 @@ app.use('/api/credits', credits);
 // En production, Express sert aussi le front compilé (npm run build puis npm start).
 const dist = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../client/dist');
 if ((process.env.NODE_ENV === 'production' || process.argv.includes('--prod')) && fs.existsSync(dist)) {
-  app.use(express.static(dist));
-  app.get(/^(?!\/api|\/uploads).*/, (_req, res) => res.sendFile(path.join(dist, 'index.html')));
+  // La config publique (Supabase) est injectée au chargement : le front compilé n'a pas besoin d'être reconstruit
+  // quand l'utilisateur ajoute ses clés (indispensable pour l'app de bureau).
+  const publicConfig = JSON.stringify({ supabaseUrl: config.supabase.url || '', supabaseAnonKey: config.supabase.anonKey || '', desktop: !!process.env.BEATMIND_ENV_FILE }).replace(/</g, '\\u003c');
+  const html = fs.readFileSync(path.join(dist, 'index.html'), 'utf8')
+    .replace('<head>', `<head><script>window.__BEATMIND_CONFIG__=${publicConfig}</script>`);
+  const sendIndex = (_req, res) => res.type('html').send(html);
+  app.get('/', sendIndex);
+  app.use(express.static(dist, { index: false }));
+  app.get(/^(?!\/api|\/uploads).*/, sendIndex);
 }
 
 app.use((err, _req, res, _next) => {
@@ -37,7 +44,9 @@ app.use((err, _req, res, _next) => {
   res.status(err.status || 500).json({ error: err.message || 'Erreur serveur' });
 });
 
-const server = app.listen(config.port, () => {
+// HOST=127.0.0.1 (app de bureau) : l'API n'est joignable que depuis la machine
+const listenArgs = process.env.HOST ? [config.port, process.env.HOST] : [config.port];
+const server = app.listen(...listenArgs, () => {
   const on = (b) => (b ? '\x1b[32m●\x1b[0m' : '\x1b[90m○\x1b[0m');
   console.log(`\n  \x1b[35mBeatMind API\x1b[0m → http://localhost:${config.port}`);
   console.log(`  ${on(services.claude)} Claude   ${on(services.suno)} Suno   ${on(services.elevenlabs)} ElevenLabs   ${on(services.youtube)} YouTube   ${on(services.supabase)} Supabase`);

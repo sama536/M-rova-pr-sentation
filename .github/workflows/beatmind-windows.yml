@@ -1,0 +1,71 @@
+# Construit beatmind-setup.exe sur une vraie machine Windows, vérifie que l'app démarre,
+# puis publie l'installeur comme artefact téléchargeable (onglet Actions → ce run → Artifacts).
+name: BeatMind — installeur Windows
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'beatmind/**'
+      - '.github/workflows/beatmind-windows.yml'
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: beatmind
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Dépendances du projet
+        run: npm ci
+
+      - name: Dépendances de l'app de bureau
+        run: npm ci
+        working-directory: beatmind/desktop
+
+      - name: Construire beatmind-setup.exe
+        run: npm run dist:win
+        working-directory: beatmind/desktop
+
+      - name: Test de démarrage (l'app empaquetée doit servir le studio)
+        shell: pwsh
+        working-directory: beatmind/desktop/dist/win-unpacked
+        run: |
+          $p = Start-Process -FilePath .\BeatMind.exe -PassThru
+          $ok = $false
+          for ($i = 0; $i -lt 60; $i++) {
+            Start-Sleep -Seconds 1
+            try {
+              $r = Invoke-RestMethod -Uri http://127.0.0.1:47800/api/health -TimeoutSec 2
+              if ($r.ok) { $ok = $true; break }
+            } catch {}
+          }
+          $page = (Invoke-WebRequest -Uri http://127.0.0.1:47800/beat -UseBasicParsing).Content
+          Stop-Process -Id $p.Id -Force -ErrorAction SilentlyContinue
+          Get-Process BeatMind -ErrorAction SilentlyContinue | Stop-Process -Force
+          if (-not $ok) { throw "L'API BeatMind n'a pas répondu" }
+          if ($page -notmatch '__BEATMIND_CONFIG__') { throw "Le studio n'est pas servi" }
+          Write-Host "BeatMind démarre et sert le studio."
+
+      - name: Test d'installation silencieuse
+        shell: pwsh
+        working-directory: beatmind/desktop/dist
+        run: |
+          Start-Process -FilePath .\beatmind-setup.exe -ArgumentList '/S' -Wait
+          $exe = Join-Path $env:LOCALAPPDATA 'Programs\beatmind-desktop\BeatMind.exe'
+          if (-not (Test-Path $exe)) { throw "BeatMind.exe absent après installation" }
+          Get-Process BeatMind -ErrorAction SilentlyContinue | Stop-Process -Force
+          Write-Host "Installé dans $exe"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: beatmind-setup
+          path: beatmind/desktop/dist/beatmind-setup.exe
+          retention-days: 30
