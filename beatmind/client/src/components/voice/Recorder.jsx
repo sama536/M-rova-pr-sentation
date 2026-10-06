@@ -5,6 +5,7 @@ import { addVoiceLocal } from '../../lib/db.js';
 import { useAuth } from '../../lib/auth.jsx';
 import { toast } from '../ui/Toaster.jsx';
 import { CREDIT_COSTS } from '@shared/catalog.js';
+import { beatesTrack } from '../../store/beates.js';
 
 const DURATION = 15;
 const SCRIPT = "Salut, c'est moi. Je teste ma voix pour BeatMind. Je parle normalement, sans forcer, comme si je racontais ma journée à un ami. Aujourd'hui il fait beau, j'ai écouté de la musique et j'ai envie de créer un son qui me ressemble.";
@@ -87,6 +88,7 @@ export default function Recorder({ onCloned }) {
       const saved = await addVoiceLocal(user.id, profile, blob);
       if (warning) toast.info(warning);
       toast.success(`Voix « ${name} » ${profile.eleven_voice_id ? 'clonée' : 'enregistrée'} !`);
+      beatesTrack('cloned');
       onCloned?.(saved);
       setBlob(null);
       setPhase('idle');

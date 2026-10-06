@@ -3,6 +3,7 @@ import { useAuth } from './auth.jsx';
 import { saveProject } from './db.js';
 import { useProject } from '../store/project.js';
 import { toast } from '../components/ui/Toaster.jsx';
+import { beatesTrack } from '../store/beates.js';
 
 export function useSaveProject() {
   const { user } = useAuth();
@@ -15,6 +16,7 @@ export function useSaveProject() {
     try {
       const { project, version } = await saveProject(user.id, snap, { label });
       useProject.getState().markSaved(project.id);
+      beatesTrack('saved');
       toast.success(`Projet sauvegardé — version ${version.version}`);
       return project;
     } catch (e) {

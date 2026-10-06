@@ -154,12 +154,45 @@ de façon atomique et remboursés en cas d'échec.
 | Cloner une voix | 10 |
 | Générer une prise vocale | 3 |
 
+### Beates, l'assistant
+Petit robot violet néon animé (repos, parle, content) qui vit en bas à droite de l'app.
+- **Tutoriel interactif** pour les nouveaux comptes : premier beat → première voix → publication sur Community.
+  Il indique la page où aller et entoure d'un anneau néon le bouton à cliquer ; chaque étape se valide toute
+  seule quand l'action est faite.
+- **Conseils selon la page** (Beat AI, Voice AI, Studio, Community, Bibliothèque, Profil), uniquement s'ils sont
+  utiles vu ce que tu as déjà fait.
+- **Mémoire** par utilisateur (`localStorage`) : actions déjà faites et conseils déjà lus — il ne se répète pas.
+- **Skip** du tuto, **réduire** (petit robot) ou **fermer** à tout moment ; « Rappeler Beates » dans le menu.
+- Code : `client/src/components/beates/` (textes dans `script.js`), mémoire dans `client/src/store/beates.js`.
+
 ### Community (`/community`)
 Prods publiques sous **Creative Commons CC0** (licence imposée par la base) · filtres style, BPM, tonalité,
 mood, instruments · tri récents / populaires / téléchargés / écoutés · lecteur inline · téléchargement
 gratuit · like, sauvegarde, commentaires · profil producteur public avec statistiques.
 
 ---
+
+## Site vitrine (`landing/`)
+
+Site statique (HTML / CSS / JS, sans build) : hero, Beat AI / Voice AI / Community, présentation de Beates,
+bouton de téléchargement, et Beates en version réduite avec une bulle de conseil qui suit la section affichée.
+
+```bash
+npm run landing   # → http://localhost:4173
+```
+
+Cette commande synchronise le logo et Beates depuis `brand/`, génère `landing/downloads/beatmind.zip`
+(le projet complet, sans `node_modules`, builds ni `.env`) puis sert le site en local. Le site n'est pas déployé.
+`npm run pack` génère seulement le zip. On peut aussi ouvrir `landing/index.html` directement
+(le bouton de téléchargement nécessite alors d'avoir lancé `npm run pack` une fois).
+
+## Identité visuelle (`brand/`)
+
+| Fichier | Usage |
+| --- | --- |
+| `logo.svg`, `logo.png` (1024 px), `logo-512.png`, `logo-192.png` | Logo B néon sur fond noir (favicon, app, site) |
+| `logo-mark.svg`, `logo-mark.png` | Le B seul, fond transparent |
+| `beates.svg`, `beates.png`, `beates.css` | Beates et ses animations (partagées app + site) |
 
 ## Structure
 
@@ -169,6 +202,9 @@ beatmind/
 ├── .env.example
 ├── shared/                 # catalogue musical + générateurs, partagés client/serveur
 ├── supabase/schema.sql     # schéma complet, RLS, triggers, buckets
+├── brand/                  # logo B (SVG + PNG) et Beates
+├── landing/                # site vitrine statique
+├── scripts/                # vérif. avant démarrage, zip, serveur du site
 ├── server/src/
 │   ├── index.js            # Express
 │   ├── config.js           # lecture du .env, détection des services
@@ -189,6 +225,8 @@ beatmind/
 | --- | --- |
 | `npm run dev` | API (port 8787, rechargement auto) + front Vite (port 5173, proxy `/api`) |
 | `npm run build` | Build de production du front dans `client/dist` |
+| `npm run landing` | Site vitrine sur http://localhost:4173 (+ génère le zip à télécharger) |
+| `npm run pack` | Génère seulement `landing/downloads/beatmind.zip` |
 | `npm start` | Serveur de production : Express sert l'API **et** le front compilé sur le port 8787 |
 
 ## Limites connues

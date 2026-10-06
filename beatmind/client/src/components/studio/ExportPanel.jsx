@@ -6,6 +6,7 @@ import { encode, zipFiles, download } from '../../audio/exporter.js';
 import { slug } from '../../lib/format.js';
 import { toast } from '../ui/Toaster.jsx';
 import PublishModal from './PublishModal.jsx';
+import { beatesTrack } from '../../store/beates.js';
 
 export async function renderFor(kind) {
   const params = useProject.getState().params;
@@ -56,6 +57,7 @@ export default function ExportPanel() {
         const fmt = id === 'wav' ? 'wav' : 'mp3';
         download(await encode(buf, fmt), `${name}${kind === 'mix' ? '' : `_${kind === 'vocals' ? 'voix' : 'beat'}`}.${fmt}`);
       }
+      beatesTrack('exported');
       toast.success('Export terminé.');
     } catch (e) {
       toast.error(`Export : ${e.message}`);
@@ -80,7 +82,7 @@ export default function ExportPanel() {
           </button>
         ))}
       </div>
-      <button type="button" className="btn-primary mt-1" onClick={() => setPublishOpen(true)}><Share2 size={15} /> Publier sur Community</button>
+      <button type="button" data-beates="publish" className="btn-primary mt-1" onClick={() => setPublishOpen(true)}><Share2 size={15} /> Publier sur Community</button>
       <PublishModal open={publishOpen} onClose={() => setPublishOpen(false)} />
     </div>
   );

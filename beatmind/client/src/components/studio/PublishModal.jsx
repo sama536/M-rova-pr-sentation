@@ -10,6 +10,7 @@ import { publishBeat } from '../../lib/db.js';
 import { encode } from '../../audio/exporter.js';
 import { renderFor } from './ExportPanel.jsx';
 import { toast } from '../ui/Toaster.jsx';
+import { beatesTrack } from '../../store/beates.js';
 import { MOODS, CC_LICENSE, INSTRUMENTS } from '@shared/catalog.js';
 
 export default function PublishModal({ open, onClose }) {
@@ -35,6 +36,7 @@ export default function PublishModal({ open, onClose }) {
         moods: moods.length ? moods : [s.params.mood?.split(/[ ,]/)[0]].filter(Boolean),
         instruments, projectId: s.projectId,
       });
+      beatesTrack('published');
       toast.success('Prod publiée sur Community !');
       onClose();
       nav('/community');

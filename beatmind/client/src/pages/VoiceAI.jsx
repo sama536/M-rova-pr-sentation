@@ -17,6 +17,7 @@ import { useVocalActions } from '../lib/vocals.js';
 import { renderProject } from '../audio/usePlayer.js';
 import { generateBeatParams } from '@shared/generators.js';
 import { STYLES, CREDIT_COSTS, BACKS_BY_GENRE, styleById } from '@shared/catalog.js';
+import { beatesTrack } from '../store/beates.js';
 
 export default function VoiceAI() {
   const { user } = useAuth();
@@ -44,6 +45,7 @@ export default function VoiceAI() {
       });
       s.applyGeneratedLyrics(res.lyrics);
       if (res.warning) toast.info(res.warning);
+      beatesTrack('lyrics');
       toast.success(existing ? 'Paroles placées sur la timeline.' : 'Paroles écrites et placées sur la timeline.');
       setPasteOpen(false);
     } catch (e) {
@@ -103,11 +105,11 @@ export default function VoiceAI() {
 
         <section>
           <SectionHeader index="02" title="Voix sur la prod" hint="Jusqu'à 3 voix en feat, chacune avec ses réglages indépendants."
-            right={<button type="button" className="btn-ghost btn-sm" disabled={s.voices.length >= 3} onClick={() => s.addVoice(null, s.voices.length ? 'drill_froid' : 'melodique_aigu')}><Users size={14} /> Ajouter une voix ({s.voices.length}/3)</button>} />
+            right={<button type="button" data-beates={s.voices.length ? undefined : 'add-voice'} className="btn-ghost btn-sm" disabled={s.voices.length >= 3} onClick={() => s.addVoice(null, s.voices.length ? 'drill_froid' : 'melodique_aigu')}><Users size={14} /> Ajouter une voix ({s.voices.length}/3)</button>} />
           {s.voices.length === 0 ? (
             <div className="panel grid place-items-center gap-3 p-8 text-center">
               <p className="text-sm text-mute">Aucune voix sur ce morceau.</p>
-              <button type="button" className="btn-primary" onClick={() => s.addVoice(profiles[0] || null)}><Plus size={15} /> Ajouter la voix principale</button>
+              <button type="button" data-beates="add-voice" className="btn-primary" onClick={() => s.addVoice(profiles[0] || null)}><Plus size={15} /> Ajouter la voix principale</button>
             </div>
           ) : (
             <div className="grid gap-4 lg:grid-cols-2 2xl:grid-cols-3">

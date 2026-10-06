@@ -15,6 +15,7 @@ import { usePlayer, useProjectRender } from '../audio/usePlayer.js';
 import { player } from '../audio/player.js';
 import { sectionRanges } from '../audio/arranger.js';
 import { STYLES, INSTRUMENTS, CREDIT_COSTS } from '@shared/catalog.js';
+import { beatesTrack } from '../store/beates.js';
 
 const EXAMPLES = [
   'Drill froide et mélancolique, flûte qui pleure, 808 qui glissent, ambiance Londres sous la pluie',
@@ -74,6 +75,7 @@ export default function BeatAI() {
       player.stop();
       s.setParams(res.params, { suno: res.suno ? { clips: res.suno, selectedId: null } : null });
       res.warnings?.forEach((w) => toast.info(w));
+      beatesTrack('beat');
       toast.success(`« ${res.params.title} » généré${res.params.source === 'claude' ? ' par Claude' : ''} !`);
       setTimeout(() => render({ play: true, keepPosition: false }), 50);
     } catch (e) {
@@ -170,7 +172,7 @@ export default function BeatAI() {
               <span>Instruments : <span className="text-zinc-200">{[...s.instruments, ...s.customInstruments].join(', ') || 'auto'}</span></span>
               <span>Références : <span className="text-zinc-200">{s.references.length}</span></span>
             </div>
-            <button type="button" className="btn-primary mt-5 w-full py-3 text-base" onClick={generate} disabled={busy}>
+            <button type="button" data-beates="generate" className="btn-primary mt-5 w-full py-3 text-base" onClick={generate} disabled={busy}>
               {busy ? <Loader2 size={18} className="animate-spin" /> : <Wand2 size={18} />} {s.params ? 'Regénérer' : 'Générer le beat'}
             </button>
             {busy && (

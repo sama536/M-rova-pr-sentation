@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { X } from 'lucide-react';
 
 export default function Modal({ open, onClose, title, children, width = 'max-w-lg' }) {
@@ -9,7 +10,8 @@ export default function Modal({ open, onClose, title, children, width = 'max-w-l
     return () => window.removeEventListener('keydown', onKey);
   }, [open, onClose]);
   if (!open) return null;
-  return (
+  // Portail vers <body> : la modale passe au-dessus de tout (panneaux floutés, barre de lecture, Beates)
+  return createPortal(
     <div className="fixed inset-0 z-50 grid place-items-center p-4 bg-black/70 backdrop-blur-sm animate-rise" onMouseDown={onClose}>
       <div className={`panel-hi w-full ${width} max-h-[90vh] overflow-auto p-6`} onMouseDown={(e) => e.stopPropagation()}>
         <div className="flex items-center justify-between mb-5">
@@ -18,6 +20,7 @@ export default function Modal({ open, onClose, title, children, width = 'max-w-l
         </div>
         {children}
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }

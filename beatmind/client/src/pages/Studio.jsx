@@ -20,6 +20,7 @@ import { useSaveProject } from '../lib/useSave.js';
 import { api } from '../lib/api.js';
 import { fmtTime } from '../lib/format.js';
 import { INSTRUMENTS, CREDIT_COSTS } from '@shared/catalog.js';
+import { beatesTrack } from '../store/beates.js';
 
 export default function Studio() {
   const s = useProject();
@@ -129,7 +130,7 @@ export default function Studio() {
             </section>
           )}
 
-          <button type="button" onClick={() => setAdvanced(!advanced)}
+          <button type="button" onClick={() => { if (!advanced) beatesTrack('advanced'); setAdvanced(!advanced); }}
             className={`flex items-center justify-between rounded-2xl border px-5 py-4 text-left transition ${advanced ? 'border-neon bg-neon/10 shadow-neon' : 'border-white/[0.08] bg-ink-850 hover:border-neon/50'}`}>
             <span>
               <span className="font-display text-base font-semibold">{advanced ? 'Revenir au mode simple' : 'Mode avancé'}</span>

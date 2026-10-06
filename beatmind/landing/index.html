@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0a0a0a" />
+  <title>BeatMind — Ta prod. Ta voix. En une idée.</title>
+  <meta name="description" content="BeatMind, le studio de création musicale assisté par IA : génère ton beat, clone ta voix, publie en Creative Commons." />
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
+  <link rel="apple-touch-icon" href="assets/logo-192.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/beates.css" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a href="#top" class="brand" aria-label="BeatMind, accueil">
+        <img src="assets/logo.svg" alt="" width="36" height="36" />
+        <span>BEAT<b>MIND</b></span>
+      </a>
+      <nav class="nav-links" aria-label="Sections">
+        <a href="#fonctionnalites">Fonctionnalités</a>
+        <a href="#beates">Beates</a>
+        <a href="#telecharger">Télécharger</a>
+      </nav>
+      <a href="#telecharger" class="btn btn-primary btn-sm">Télécharger</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- HERO -->
+    <section class="hero wrap">
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="dot"></span> Studio de création musicale assisté par IA</p>
+        <h1 class="hero-title">
+          <span class="hero-name">BeatMind</span>
+          <span class="line">Ta prod.</span>
+          <span class="line"><em>Ta voix.</em></span>
+          <span class="line">En une idée.</span>
+        </h1>
+        <p class="hero-sub">
+          Écris ce que tu entends dans ta tête. BeatMind génère le beat, clone ta voix,
+          écrit et place les paroles, puis t'ouvre un vrai studio pour tout retoucher.
+        </p>
+        <div class="hero-cta">
+          <a href="#telecharger" class="btn btn-primary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Télécharger BeatMind
+          </a>
+          <a href="#fonctionnalites" class="btn btn-ghost">Voir ce qu'il sait faire</a>
+        </div>
+        <ul class="hero-facts">
+          <li><b>15</b> styles mixables</li>
+          <li><b>3</b> voix en feat</li>
+          <li><b>CC0</b> zéro droit d'auteur</li>
+        </ul>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <div class="mock">
+          <div class="mock-head">
+            <img src="assets/logo.svg" alt="" width="22" height="22" />
+            <span class="mono">BEAT AI</span>
+            <span class="mock-dots"><i></i><i></i><i></i></span>
+          </div>
+          <p class="mock-label mono">PROMPT</p>
+          <p class="mock-prompt">« Une drill froide, flûte mélancolique, 808 qui glissent, refrain planant »</p>
+          <div class="mock-chips">
+            <span>142 BPM</span><span>F# mineur</span><span>Drill × Cloud rap</span><span>Flûte · 808 · Strings</span>
+          </div>
+          <div class="mock-wave" id="hero-wave"></div>
+          <div class="mock-sections mono"><span>INTRO</span><span>COUPLET</span><span>REFRAIN</span><span>OUTRO</span></div>
+        </div>
+        <img src="assets/logo.svg" alt="" class="hero-logo" width="150" height="150" />
+      </div>
+    </section>
+
+    <!-- FONCTIONNALITÉS -->
+    <section id="fonctionnalites" class="section wrap">
+      <p class="eyebrow">Trois outils, un seul studio</p>
+      <h2 class="section-title">De l'idée au son publié.</h2>
+      <div class="features">
+        <article class="card feature">
+          <div class="feature-top">
+            <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.6 3.6-1.2-1.2a1.2 1.2 0 0 0-1.7 0L2.4 18.7a1.2 1.2 0 0 0 0 1.7l1.2 1.2a1.2 1.2 0 0 0 1.7 0L21.6 5.3a1.2 1.2 0 0 0 0-1.7Z"/><path d="m14 7 3 3"/><path d="M5 6v4"/><path d="M19 14v4"/><path d="M10 2v2"/><path d="M7 8H3"/><path d="M21 16h-4"/></svg></span>
+            <span class="num mono">01</span>
+          </div>
+          <h3>Beat AI</h3>
+          <p>Décris ta prod en une phrase. Colle des liens YouTube en référence : BPM, flow, vibe et structure sont analysés. Mélange les styles, choisis tes instruments.</p>
+          <ul>
+            <li>Claude calcule BPM, tonalité, accords, structure et mix</li>
+            <li>Suno génère l'audio réel</li>
+            <li>Tout reste modifiable après génération</li>
+          </ul>
+          <div class="feature-art art-beat" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        </article>
+        <article class="card feature">
+          <div class="feature-top">
+            <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><path d="M12 17v5"/></svg></span>
+            <span class="num mono">02</span>
+          </div>
+          <h3>Voice AI</h3>
+          <p>Parle 15 secondes dans ton micro, ta voix est clonée. Pose-la sur ta prod avec jusqu'à 3 voix en feat, chacune avec ses réglages.</p>
+          <ul>
+            <li>10 presets : grave saturé, autotune max, jazz chaud…</li>
+            <li>Paroles écrites par toi ou par Claude</li>
+            <li>Timeline : un débit par section, du chanté au rap ultra rapide</li>
+          </ul>
+          <div class="feature-art art-voice" aria-hidden="true">
+            <span style="--w:14%">Intro</span><span style="--w:30%" class="hot">Couplet</span><span style="--w:20%">Refrain</span><span style="--w:22%" class="hot">Couplet</span><span style="--w:14%">Outro</span>
+          </div>
+        </article>
+        <article class="card feature">
+          <div class="feature-top">
+            <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9"/><path d="M16 3.1a4 4 0 0 1 0 7.8"/></svg></span>
+            <span class="num mono">03</span>
+          </div>
+          <h3>Community</h3>
+          <p>Publie tes prods en un clic. Chaque post est en Creative Commons CC0 : tout le monde peut écouter, télécharger et utiliser librement.</p>
+          <ul>
+            <li>Filtres par style, BPM, tonalité, mood, instruments</li>
+            <li>Lecteur intégré, like, sauvegarde, commentaires</li>
+            <li>Profil producteur avec tes stats</li>
+          </ul>
+          <div class="feature-art art-com" aria-hidden="true">
+            <span><b>Minuit sur le port</b><small>NYX 808 · 144 BPM</small><em>CC0</em></span>
+            <span><b>Soleil de Lagos</b><small>Luma · 104 BPM</small><em>CC0</em></span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- BEATES -->
+    <section id="beates" class="section wrap beates-section">
+      <div class="beates-stage" aria-hidden="true">
+        <div class="beates-halo"></div>
+        <div class="beates-big" data-beates-svg data-mood="talking"></div>
+        <div class="bubble b1">Yo, moi c'est Beates.</div>
+        <div class="bubble b2">Rap rapide dans les couplets, chanté dans le refrain. Fais-moi confiance.</div>
+        <div class="bubble b3">Pense à sauvegarder. Chaque version se restaure.</div>
+      </div>
+      <div class="beates-copy">
+        <p class="eyebrow">Ton assistant</p>
+        <h2 class="section-title">Voici Beates.</h2>
+        <p class="lead">
+          Un petit robot violet qui vit dans l'app. Chill, direct, jamais lourd :
+          il te guide pour ton premier son, puis te glisse le bon conseil au bon moment.
+        </p>
+        <div class="traits">
+          <div class="trait"><b>Tutoriel en 3 étapes</b><span>Premier beat, première voix, première publication. Il te montre où cliquer.</span></div>
+          <div class="trait"><b>Conseils selon la page</b><span>Beat AI, Voice AI, Studio, Community : chaque page a ses astuces.</span></div>
+          <div class="trait"><b>Il retient tout</b><span>Ce que t'as déjà fait et ce que t'as déjà lu : il ne radote jamais.</span></div>
+          <div class="trait"><b>Discret quand tu veux</b><span>Skip le tuto, réduis-le ou ferme-le à tout moment. Il revient si tu l'appelles.</span></div>
+        </div>
+        <div class="moods">
+          <figure><div data-beates-svg data-mood="idle"></div><figcaption class="mono">au repos</figcaption></figure>
+          <figure><div data-beates-svg data-mood="talking"></div><figcaption class="mono">il parle</figcaption></figure>
+          <figure><div data-beates-svg data-mood="happy"></div><figcaption class="mono">content</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÉLÉCHARGER -->
+    <section id="telecharger" class="section wrap">
+      <div class="card download">
+        <div class="download-copy">
+          <img src="assets/logo.svg" alt="" width="64" height="64" class="download-logo" />
+          <h2 class="section-title">Télécharge BeatMind.</h2>
+          <p class="lead">Gratuit, sur ton ordi. Fonctionne directement en mode démo, sans aucune clé : ajoute tes clés API plus tard pour activer Claude, Suno et ElevenLabs.</p>
+          <a href="downloads/beatmind.zip" download class="btn btn-primary btn-lg" id="download-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Télécharger BeatMind <span class="mono small">.zip</span>
+          </a>
+          <p class="fine">Windows, macOS, Linux · Node.js 18.17 ou plus récent requis</p>
+        </div>
+        <ol class="steps">
+          <li><span class="mono">1</span><div><b>Installe Node.js</b><small>Version LTS sur nodejs.org (une seule fois).</small></div></li>
+          <li><span class="mono">2</span><div><b>Extrais le zip</b><small>Clic droit → « Extraire tout… ».</small></div></li>
+          <li><span class="mono">3</span><div><b>Lance le studio</b><small>Dans le dossier : <code>npm run dev</code></small></div></li>
+          <li><span class="mono">4</span><div><b>Ouvre ton navigateur</b><small><code>http://localhost:5173</code> — Beates t'attend.</small></div></li>
+        </ol>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <a href="#top" class="brand"><img src="assets/logo.svg" alt="" width="28" height="28" /><span>BEAT<b>MIND</b></span></a>
+      <p>Prods publiées sous licence Creative Commons CC0. Claude · Suno · ElevenLabs · YouTube Data API.</p>
+    </div>
+  </footer>
+
+  <!-- Beates, version réduite -->
+  <aside class="mini-beates" id="mini-beates" aria-label="Beates">
+    <div class="mini-bubble" id="mini-bubble" role="status">
+      <button type="button" class="mini-close" id="mini-close" aria-label="Fermer la bulle">×</button>
+      <p id="mini-text">Yo. Scroll un peu, je te montre ce que BeatMind sait faire.</p>
+      <button type="button" class="mini-next" id="mini-next">Autre conseil →</button>
+    </div>
+    <button type="button" class="mini-bot" id="mini-bot" aria-label="Beates : afficher un conseil">
+      <span data-beates-svg data-mood="idle"></span>
+    </button>
+  </aside>
+
+  <script src="main.js"></script>
+</body>
+</html>

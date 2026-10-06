@@ -11,7 +11,9 @@
     "predev": "node scripts/preflight.mjs",
     "dev": "concurrently -k -n api,web -c magenta,blue \"npm run dev -w server\" \"npm run dev -w client\"",
     "build": "npm run build -w client",
-    "start": "npm run start -w server"
+    "start": "npm run start -w server",
+    "landing": "node scripts/landing.mjs",
+    "pack": "node scripts/pack.mjs"
   },
   "devDependencies": {
     "concurrently": "^9.1.2"

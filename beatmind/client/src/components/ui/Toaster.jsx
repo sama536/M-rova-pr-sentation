@@ -21,7 +21,7 @@ const ICONS = { success: CheckCircle2, error: AlertTriangle, info: Info };
 export default function Toaster() {
   const items = useToasts((s) => s.items);
   return (
-    <div className="fixed bottom-24 right-4 z-[60] grid gap-2 w-[min(380px,calc(100vw-2rem))]">
+    <div className="fixed top-4 right-4 z-[60] grid gap-2 w-[min(380px,calc(100vw-2rem))]">
       {items.map((t) => {
         const Icon = ICONS[t.kind];
         return (

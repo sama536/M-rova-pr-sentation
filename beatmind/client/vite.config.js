@@ -10,7 +10,7 @@ export default defineConfig(({ mode }) => {
     plugins: [react()],
     build: { chunkSizeWarningLimit: 900 },
     envDir: '..', // lit beatmind/.env (variables VITE_*)
-    resolve: { alias: { '@shared': path.resolve(__dirname, '../shared') } },
+    resolve: { alias: { '@shared': path.resolve(__dirname, '../shared'), '@brand': path.resolve(__dirname, '../brand') } },
     server: {
       port: 5173,
       fs: { allow: ['..'] },

@@ -3,6 +3,9 @@ import { NavLink, Outlet, Link, useNavigate } from 'react-router-dom';
 import { Wand2, Mic2, SlidersHorizontal, FolderOpen, Users, User, LogOut, Coins, Menu, X } from 'lucide-react';
 import Logo from './ui/Logo.jsx';
 import TransportBar from './TransportBar.jsx';
+import BeatesAssistant from './beates/BeatesAssistant.jsx';
+import BeatesBot from './beates/BeatesBot.jsx';
+import { useBeates } from '../store/beates.js';
 import { useAuth } from '../lib/auth.jsx';
 import { useCredits } from '../store/credits.js';
 import { getCreditsBalance, rememberDemoUser } from '../lib/db.js';
@@ -18,6 +21,8 @@ const NAV = [
 export default function Layout() {
   const { user, signOut, isDemo } = useAuth();
   const balance = useCredits((s) => s.balance);
+  const beatesMode = useBeates((s) => s.mode);
+  const setBeatesMode = useBeates((s) => s.setMode);
   const [open, setOpen] = useState(false);
   const nav = useNavigate();
 
@@ -46,6 +51,11 @@ export default function Layout() {
         </NavLink>
       ))}
       <div className="mt-auto grid gap-3">
+        {beatesMode === 'closed' && (
+          <button type="button" onClick={() => { setBeatesMode('open'); setOpen(false); }} className="flex items-center gap-2 rounded-xl border border-white/[0.06] px-3 py-2 text-left text-sm text-zinc-300 hover:border-neon/50 hover:text-white">
+            <BeatesBot size={26} /> <span className="grid leading-tight"><span className="font-semibold">Rappeler Beates</span><span className="text-[11px] text-mute-dim">Ton assistant</span></span>
+          </button>
+        )}
         {isDemo && (
           <div className="rounded-xl border border-neon/30 bg-neon/5 p-3">
             <div className="label text-neon-soft">Mode démo</div>
@@ -91,6 +101,7 @@ export default function Layout() {
         <Outlet />
       </main>
       <TransportBar />
+      <BeatesAssistant />
     </div>
   );
 }
