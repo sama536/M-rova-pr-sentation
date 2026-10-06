@@ -45,13 +45,15 @@ beatmind/
 ├── README.md             doc utilisateur (installation, Supabase, dépannage)
 ├── shared/               catalogue + générateurs, partagés client/serveur (ESM, "type": "module")
 │   ├── catalog.js        15 styles, 12 instruments, 10 presets vocaux, 6 débits, backs par genre, coûts crédits, CC0
+│   ├── styleProfiles.js  fiche de production par style (BPM, batterie, basse, accords, gammes, signature, à éviter, artistes) + alias d'instruments + indices d'artistes
 │   └── generators.js     générateurs déterministes (beat, paroles, analyse de référence) + normalisation des réponses Claude
 ├── server/src/
 │   ├── index.js          Express ; en prod sert client/dist et injecte window.__BEATMIND_CONFIG__ (Supabase, desktop)
 │   ├── config.js         .env racine, server/.env, puis BEATMIND_ENV_FILE (desktop) ; détection des services
 │   ├── lib/              supabase (JWT / x-demo-user), credits (RPC spend_credits + refund), storage (Supabase ou disque)
 │   ├── services/         claude, suno, elevenlabs, youtube (oEmbed sans clé)
-│   └── routes/           /api/beat (generate, suno/:ids, proxy), /youtube/analyze, /lyrics/generate, /voice (clone, synthesize), /credits
+│   └── routes/           /api/beat (generate, suno/:ids, proxy), /youtube/analyze, /lyrics/generate, /voice (clone, synthesize), /credits,
+│                         /settings/keys (GET état masqué, PUT enregistre dans le .env + rechargement à chaud)
 ├── client/src/
 │   ├── audio/            arranger (notes), instruments (synthèse Web Audio), renderer (OfflineAudioContext),
 │   │                     vocalfx (pitch WSOLA, autotune, harmonies, backs), exporter (WAV/MP3/zip), player, usePlayer
@@ -75,6 +77,21 @@ Claude renvoie BPM, tonalité, gamme, swing, rythme, progression (degrés 0–6)
 énergie), pistes + FX, notes de mix/prod, prompt Suno. **Tout est éditable** (`BeatParamsEditor`) ;
 changer tonalité/gamme/progression/structure réarrange les pistes non éditées à la main.
 Suno : génération asynchrone, polling 5 s, piste « Beat IA (Suno) » ajoutée (les pistes synthé sont alors coupées).
+
+### Fidélité au style et aux références (refonte)
+- `shared/styleProfiles.js` est la source de vérité par style. Claude reçoit pour chaque style choisi une fiche
+  chiffrée (plage de BPM, `drums.pattern` imposé, `arrangement.bass` / `arrangement.chords`, gammes, signature,
+  « à éviter », artistes) ; `normalizeBeatParams` **force** ces contraintes (BPM ramené dans la plage, motif de
+  batterie inconnu → celui du style ; avant, tout motif inconnu retombait sur « trap »).
+- Fusion de styles (`blendStyles`) : le 1er style donne le groove, plages de BPM croisées.
+- Références : les liens collés sont analysés automatiquement à la génération (avant, ceux non « analysés »
+  étaient ignorés). Analyse Claude : identification artiste/morceau, BPM/tonalité connus, `drumPattern`,
+  instruments, traits de production. Sans Claude : `ARTIST_HINTS`. `referenceTarget` combine les références
+  (fiabilité ≥ 0,45 seulement) ; curseur « Influence des références » (`referenceWeight`) ; le résultat affiche
+  « Repris de tes références » (`params.referenceNotes`). Sans style choisi, le style vient des références.
+  Instruments repris seulement s'ils sont compatibles avec le style (pas de 808 dans un jazz).
+- Arrangeur : basse et accords selon `params.arrangement` (walking, offbeat, 808glide avec slides, log drum,
+  dembow, reese / comp, stabs, pluck, arp, halfbar).
 
 ### Moteur audio (navigateur)
 - `arranger.js` : grille 16 pas/mesure, motifs de batterie par style (trap, drill, four, boombap, swing, afro,
@@ -102,6 +119,15 @@ voix actives, réglages propres, compteur syllabes/mesure vs cible, punchlines s
 Mode simple (prompt de variation, lecteur + forme d'onde, réglages essentiels, volumes) et mode avancé
 (timeline multipistes, mixer faders/pan/M/S + master, piano roll : clic ajoute/supprime, glisser déplace,
 effets par piste, son, octave, ajout de pistes). Panneau d'export + « Publier sur Community ».
+
+### Clés API (bouton « ⚙️ Clés API »)
+En haut de la barre latérale (et dans l'en-tête mobile, et le menu de l'app de bureau) : modal pour Claude,
+ElevenLabs, Suno (adresse de l'API au format gcui-art + clé optionnelle) et YouTube. Enregistre dans le `.env`
+(`ENV_FILE` : `%APPDATA%\BeatMind\.env` en desktop, `beatmind/.env` en dev) et recharge la config à chaud
+(`loadConfig()` mute `config`/`services` en place ; client Anthropic recréé si la clé change).
+Sécurité : modification seulement depuis la machine elle-même (loopback) ET en dev ou desktop ; jamais de clé
+renvoyée en clair. Erreurs Claude/Suno traduites en messages clairs (`friendlyError`).
+Les fournisseurs Suno « à clé seule » (ex. sunoapi.org) ne sont pas gérés : leur doc était inaccessible.
 
 ### Comptes, bibliothèque, crédits, Community
 Auth email + Google (Supabase) ou comptes locaux (démo). Profil (nom, username, bio, avatar).
