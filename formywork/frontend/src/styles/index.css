@@ -1,0 +1,102 @@
+@import "@fontsource-variable/fraunces";
+@import "@fontsource-variable/dm-sans";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------------------------------------------------ jetons de couleur
+   Les valeurs sont des canaux RVB pour permettre l'opacité Tailwind (bg-ink/10…).
+   Contrastes vérifiés AA : texte bleu foncé sur orange, jamais de blanc sur orange clair. */
+:root {
+  --bg: 251 245 234; /* crème #FBF5EA */
+  --surface: 255 252 246; /* cartes */
+  --sand: 241 228 206; /* beige #F1E4CE, surfaces secondaires */
+  --line: 228 213 188;
+  --ink: 20 38 74; /* bleu foncé #14264A */
+  --muted: 74 88 120; /* 6,8:1 sur crème */
+  --accent: 246 165 96; /* orange clair #F6A560 */
+  --accent-strong: 232 121 58; /* orange soutenu #E8793A, états actifs */
+  --on-accent: 20 38 74;
+  --primary: 20 38 74;
+  --on-primary: 251 245 234;
+  --success: 30 110 78;
+  --danger: 176 38 30;
+  --warning: 150 90 0;
+  --info: 38 88 160;
+  --focus: 232 121 58;
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --bg: 14 26 51; /* bleu nuit */
+  --surface: 21 35 63;
+  --sand: 30 46 79;
+  --line: 45 63 99;
+  --ink: 251 245 234; /* texte crème */
+  --muted: 196 188 172;
+  --accent: 246 165 96;
+  --accent-strong: 232 121 58;
+  --on-accent: 20 38 74;
+  --primary: 246 165 96; /* boutons principaux orange + texte bleu foncé en sombre */
+  --on-primary: 20 38 74;
+  --success: 110 200 160;
+  --danger: 255 140 130;
+  --warning: 240 190 110;
+  --info: 140 180 240;
+  --focus: 246 165 96;
+  color-scheme: dark;
+}
+
+/* ------------------------------------------------------------------ taille du texte réglable */
+html {
+  font-size: 17px;
+}
+html[data-text-size="large"] {
+  font-size: 19px;
+}
+html[data-text-size="xlarge"] {
+  font-size: 21px;
+}
+
+@layer base {
+  body {
+    @apply bg-bg font-sans text-ink antialiased;
+    line-height: 1.55;
+    font-feature-settings: "ss01";
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-display text-ink;
+    font-optical-sizing: auto;
+    letter-spacing: -0.01em;
+  }
+  :focus-visible {
+    outline: 3px solid rgb(var(--focus));
+    outline-offset: 2px;
+    border-radius: 0.5rem;
+  }
+  ::selection {
+    background: rgb(var(--accent) / 0.45);
+  }
+}
+
+@layer utilities {
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+  .scroll-thin {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(var(--line)) transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
