@@ -11,7 +11,7 @@ from sqlalchemy.orm import Session
 from ..api.routes_auth import DEMO_EMAIL, DEMO_PASSWORD
 from ..auth import hash_password
 from ..db import utcnow
-from ..models import Application, ApplicationEvent, Offer, Resume, SavedSearch, SearchResult, User
+from ..models import Application, ApplicationEvent, Offer, Resume, SavedSearch, SearchResult, SourceStatus, User
 from ..services.aggregator import upsert_offer
 from ..sources import demo_source
 
@@ -54,8 +54,7 @@ DEMO_RESUME = {
             "end": "02/2009",
             "current": False,
             "bullets": [
-                "Saisir les écritures comptables courantes",
-                "Classer et archiver les pièces justificatives",
+                "Saisie des écritures comptables courantes",
             ],
         },
     ],
@@ -80,7 +79,7 @@ DEMO_RESUME = {
     "skills": ["Facturation", "Devis", "Excel", "Sage", "Accueil", "Organisation", "Rigueur", "Polyvalence"],
     "languages": [{"name": "Anglais", "level": "notions"}],
     "certifications": [],
-    "interests": ["Bénévolat dans une association de quartier (trésorière)"],
+    "interests": ["Mariée, deux enfants", "Bénévolat dans une association de quartier (trésorière)"],
     "import_flags": {},
 }
 
@@ -170,7 +169,7 @@ def seed_demo(db: Session) -> None:
             "Entretien avec la directrice pédagogique. Préparer un exemple de séance Excel.",
             now - timedelta(days=12),
             None,
-            now + timedelta(days=2, hours=3),
+            (now + timedelta(days=2)).replace(hour=12, minute=30, second=0, microsecond=0),
         ),
         ("demo-008", "refus", "Réponse reçue : poste pourvu en interne.", now - timedelta(days=30), None, None),
     ]
@@ -191,4 +190,6 @@ def seed_demo(db: Session) -> None:
         db.add(app)
         db.flush()
         db.add(ApplicationEvent(application_id=app.id, kind="status", message="Candidature ajoutée (exemple de démo)"))
+    # La source démo a « répondu » au moment de la création des données.
+    db.merge(SourceStatus(name="demo", last_success_at=utcnow(), last_count=len(offers), calls_day="", calls_today=0))
     db.commit()
